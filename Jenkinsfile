@@ -10,18 +10,6 @@ pipeline {
                 }
             }
         } 
-        // stage('Check Python') {
-        //     steps {
-        //         bat 'echo %PATH%'
-        //         bat 'python --version'
-        //     }
-        // }
-        // stage('Robot Framework') {
-        //     steps {
-        //         bat 'echo %PATH%'
-        //         bat 'robot --version'
-        //     }
-        // }
         stage('E2E') {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
