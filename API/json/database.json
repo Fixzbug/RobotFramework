@@ -1,0 +1,129 @@
+{
+    "login": {
+        "type": "login",
+        "username": "admin",
+        "password": "admin"
+    },
+    "adduser": {
+        "type": "adduser",
+        "username": "users5",
+        "password": "users5",
+        "name": "users5",
+        "phone": "0907487359",
+        "nickname": "tester",
+        "bank_name": "กรุงไทย",
+        "bank_number": "123-456-789",
+        "role": "USER",
+        "createdate": "14-05-2024"
+    },
+    "updateuser": {
+        "type": "updateuser",
+        "username": "users",
+        "password": "users",
+        "name": "users",
+        "phone": "0907487359",
+        "nickname": "tester",
+        "bank_name": "กรุงไทย",
+        "bank_number": "123-456-789",
+        "createdate": "14-05-2024",
+        "user_id": 4
+    },
+    "updateprofile": {
+        "type": "updateprofile",
+        "username": "user9",
+        "password": "user9",
+        "user_id": 9
+    },
+    "allaccount": {
+        "type": "allaccount"
+    },
+    "account": {
+        "type": "account",
+        "user_id":  9
+    },
+    "allbanks": {
+        "type": "allbanks"
+    },
+    "alldevice": {
+        "type": "alldevice"
+    },
+    "adddevice": {
+        "type": "adddevice",
+        "user_id": 9,
+        "macaddress": "QR1111",
+        "boardname": "QR1111",
+        "status": 0,
+        "amounts": 10000,
+        "date": "14/05/2024",
+        "createdate": "14/05/2024",
+        "datestamp": "14/05/2024 22:37:22"
+    },
+    "device": {
+        "type": "device",
+        "user_id": 9
+    },
+    "updatenamedevice": {
+        "type": "updatenamedevice",
+        "boardname": "NEWQR1111",
+        "device_id": 29
+    },
+    "removedevice": {
+        "type": "removedevice",
+        "device_id": 26
+    },
+    "tranferrecord": {
+        "type": "tranferrecord"
+    },
+    "tranferrecordbyid": {
+        "type": "tranferrecordbyid",
+        "user_id": 7
+    },
+    "alltranfer": {
+        "type": "alltranfer"
+    },
+    "tranfer": {
+        "type": "tranfer",
+        "user_id": 7
+    },
+    "deposit": {
+        "type": "deposit",
+        "user_id": 9,
+        "operation_id": "ADMIN",
+        "macaddress": "ADMIN",
+        "amounts": 10000,
+        "ws_id": 7,
+        "date": "14/05/2024",
+        "time": "22:37:22"
+    },
+    "withdraw": {
+        "type": "withdraw",
+        "user_id": 9,
+        "operation_id": "ADMIN",
+        "macaddress": "ADMIN",
+        "amounts": 1,
+        "ws_id": 7,
+        "date": "14/05/2024",
+        "time": "22:37:22"
+    },
+    "allreport": {
+        "type": "allreport",
+        "form": "2024-05-11",
+        "to": "2024-05-11"
+    },
+    "perdayreport": {
+        "type": "perdayreport",
+        "user_id": 2,
+        "form": "2024-05-11",
+        "to": "2024-05-11"
+    },
+    "perweekreport": {
+        "type": "perweekreport",
+        "user_id": 2,
+        "form": "2024-05-01",
+        "to": "2024-05-12"
+    },
+    "removeuser": {
+        "type": "removeuser",
+        "user_id": 7
+    }
+}
