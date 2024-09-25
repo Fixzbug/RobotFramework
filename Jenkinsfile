@@ -6,20 +6,6 @@ pipeline {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     bat label: '', script: '''
                         python --version
-                        // IF %ERRORLEVEL% NEQ 0 (
-                        //     echo Python is not installed or not available in PATH
-                        //     exit /b 9009
-                        // ) ELSE (
-                        //     echo Python is installed
-                        // )
-
-                        robot --version
-                        // IF %ERRORLEVEL% NEQ 0 (
-                        //     echo Robot Framework is not installed or not available in PATH
-                        //     exit /b 9009
-                        // ) ELSE (
-                        //     echo Robot Framework is installed
-                        // )
                     '''
                 }
             }
