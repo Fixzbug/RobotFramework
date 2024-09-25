@@ -1,22 +1,22 @@
 pipeline {
     agent any
     stages {
-        stage('Check Python and Robot Framework') {
-            steps {
-                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    bat label: '', script: '''
-                        python --version
-                    '''
-                }
-            }
-        } 
+        // stage('Check Python and Robot Framework') {
+        //     steps {
+        //         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+        //             bat label: '', script: '''
+        //                 python --version
+        //             '''
+        //         }
+        //     }
+        // } 
 
         stage('E2E') {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     bat label: '', script: '''
-                        echo Running batch file: TC_login.bat
-                        call D:\\RobotFramework\\bat_file\\TC_login.bat
+                        echo Running batch file: pythoncheck.bat
+                        call D:\\RobotFramework\\bat_file\\pythoncheck.bat
                     '''
                 }
             }
