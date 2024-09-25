@@ -1,0 +1,7 @@
+share_drive: D:/automate/Excel_sync_robot_file/
+
+excel_file:
+  DATA: RL_DATA_FILE.xlsx
+
+json_file:
+  API: database.json

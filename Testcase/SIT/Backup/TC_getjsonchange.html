@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <textarea name="atext" id="atext" rows="20" cols="80"></textarea><br><br>
+    <button onclick="makeRequest()">Make Request</button>
+    <script type="text/javascript">
+        var json = {
+            "customer_info_th": {
+                "thai_title": "นางสาว",
+                "thai_first_name": "ทดสอบ",
+                "thai_middle_name": "",
+                "thai_last_name": "ยูเอที",
+                "thai_full_name": "นางสาว ทดสอบ ยูเอที"
+            },
+            "customer_info_en": {
+                "en_title": "",
+                "en_first_name": "Todsob",
+                "en_middle_name": "",
+                "en_last_name": "UAT",
+                "en_full_name": "Ms. Todsob UAT"
+            },
+            "birth_date": "1991-01-12",
+            "identifier": {
+                "card_number": "1997198834418",
+                "card_type": "324001",
+                "card_issuing_country": "TH",
+                "card_issue_date": "2018-01-30",
+                "card_expiry_date": "2100-11-30"
+            }
+        }
+        // Convert JSON object to string
+        var jsonString = JSON.stringify(json, null, 2); // The 'null' and '2' arguments format the JSON nicely
+
+        // Set the value of the textarea
+        document.getElementById('atext').value = jsonString;
+
+
+    </script>
+</body>
+
+</html>
