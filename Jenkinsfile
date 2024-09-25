@@ -1,13 +1,13 @@
 pipeline {
     agent any
-    
+
     stages {
         stage('E2E') {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     bat label: '', script: '''
                         echo Running batch file: TC_login.bat
-                        call D:\\RobotFramework\\Testcase\\SIT\\bat_file\\TC_login.robot
+                        call D:\\RobotFramework\\bat_file\\TC_login.robot
                     '''
                 }
             }
