@@ -33,39 +33,39 @@ pipeline {
             }
         }
     }
-    post {
-        always {
-            script {
-                // Execute the external batch script and capture its output
-                def scriptOutput = bat(script: 'findoutput.bat', returnStdout: true).trim()
-                echo "Output from external script: ${scriptOutput}"
+    // post {
+    //     always {
+    //         script {
+    //             // Execute the external batch script and capture its output
+    //             def scriptOutput = bat(script: 'findoutput.bat', returnStdout: true).trim()
+    //             echo "Output from external script: ${scriptOutput}"
                 
-                // Determine the length of the script output
-                def outputLength = scriptOutput.length()
+    //             // Determine the length of the script output
+    //             def outputLength = scriptOutput.length()
                 
-                // Calculate the start index for the substring to remove the last 10 digits
-                def startIndex = outputLength - 16
+    //             // Calculate the start index for the substring to remove the last 10 digits
+    //             def startIndex = outputLength - 16
                 
-                // Extract the substring to remove the last 10 digits
-                def trimmedName = scriptOutput.substring(startIndex)
-                echo "Trimmed variable name: ${trimmedName}"
+    //             // Extract the substring to remove the last 10 digits
+    //             def trimmedName = scriptOutput.substring(startIndex)
+    //             echo "Trimmed variable name: ${trimmedName}"
                 
-                // Define variables for file names based on scriptOutput
-                def outputFileName = "output${trimmedName}.xml"
-                def reportFileName = "report${trimmedName}.html"
-                def logFileName = "log${trimmedName}.html"
+    //             // Define variables for file names based on scriptOutput
+    //             def outputFileName = "output${trimmedName}.xml"
+    //             def reportFileName = "report${trimmedName}.html"
+    //             def logFileName = "log${trimmedName}.html"
                 
-                // Publish Robot results with dynamic file names
-                step([
-                    $class              : 'RobotPublisher',
-                    outputPath          : 'D:/RobotFramework/Results/TC_login',
-                    outputFileName      : outputFileName,
-                    reportFileName      : reportFileName,
-                    logFileName         : logFileName,
-                    disableArchiveOutput: true,
-                    otherFiles          : "*.png,*.jpg"
-                ])
-            }
-        }
-    }
+    //             // Publish Robot results with dynamic file names
+    //             step([
+    //                 $class              : 'RobotPublisher',
+    //                 outputPath          : 'D:/RobotFramework/Results/TC_login',
+    //                 outputFileName      : outputFileName,
+    //                 reportFileName      : reportFileName,
+    //                 logFileName         : logFileName,
+    //                 disableArchiveOutput: true,
+    //                 otherFiles          : "*.png,*.jpg"
+    //             ])
+    //         }
+    //     }
+    // }
 }
