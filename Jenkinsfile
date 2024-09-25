@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     stages {
         stage('Check Python and Robot Framework') {
             steps {
@@ -25,9 +24,7 @@ pipeline {
                 }
             }
         } 
-    }  
 
-    stages {
         stage('E2E') {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
