@@ -7,7 +7,7 @@ pipeline {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     bat label: '', script: '''
                         echo Running batch file: TC_login.bat
-                        call D:\\RobotFramework\\bat_file\\TC_login.robot
+                        call D:\\RobotFramework\\bat_file\\TC_login.bat
                     '''
                 }
             }
