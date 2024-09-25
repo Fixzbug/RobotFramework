@@ -4,7 +4,7 @@ SETLOCAL EnableDelayedExpansion
 REM Initialize variables
 SET "NewestFile="
 REM Loop through the files and find the newest *.xml file
-FOR /F "eol=| delims=" %%I IN ('DIR "D:\Automate\RobotFramework\Results\TC_login\*.xml" /A-D /B /O-D /TW 2^>nul') DO (
+FOR /F "eol=| delims=" %%I IN ('DIR "D:\RobotFramework\Results\TC_login\*.xml" /A-D /B /O-D /TW 2^>nul') DO (
     SET "NewestFile=%%I"
     GOTO FoundFile
 )
