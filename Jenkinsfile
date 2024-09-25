@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    tools {
-        python 'Python3' // ชื่อที่ตั้งไว้ใน Global Tool Configuration
-    }
     stages {
         // stage('Check Python and Robot Framework') {
         //     steps {
