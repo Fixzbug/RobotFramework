@@ -54,4 +54,4 @@ ${Excel_name}    DATAFILE_WORKFLOW_TYPE_01
 TC002 - TEST
     [Tags]    TC002
     BuiltIn.Log    TEST    WARN
-    BuiltIn.Sleep    10s
+    # BuiltIn.Sleep    10s
