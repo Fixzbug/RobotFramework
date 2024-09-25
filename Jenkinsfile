@@ -1,7 +1,6 @@
 pipeline {
-    agent {
-        label 'Automate-Test'
-    }
+    agent any
+    
     stages {
         stage('E2E') {
             steps {
