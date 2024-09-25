@@ -3,18 +3,7 @@ pipeline {
         label 'Automate-Test'
     }
     stages {
-        // stage('Map_DriveL') {
-        //     steps {
-        //         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-        //             echo "Running batch file in MapDriveLUat..."
-        //             bat label: '', script: '''
-        //                 echo Running batch file: MapDriveLUat.bat
-        //                 call D:\\MapDriveLUat.bat
-        //             '''
-        //         }
-        //     }
-        // }
-        stage('E2E_01') {
+        stage('E2E') {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     bat label: '', script: '''
