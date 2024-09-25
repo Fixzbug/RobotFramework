@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        python 'Python3' // ชื่อที่ตั้งไว้ใน Global Tool Configuration
+    }
     stages {
         // stage('Check Python and Robot Framework') {
         //     steps {
@@ -11,6 +14,12 @@ pipeline {
         //     }
         // } 
 
+        stage('Check Python') {
+            steps {
+                bat 'echo %PATH%'
+                bat 'python --version'
+            }
+        }
         stage('E2E') {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
