@@ -19,7 +19,7 @@ pipeline {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     bat label: '', script: '''
                         echo Running batch file: TC_SIT.bat
-                        call D:\\Automate\\RobotFramework\\Testcase\\SIT\\bat_file\\TC_login.robot
+                        call D:\\RobotFramework\\Testcase\\SIT\\bat_file\\TC_login.robot
                     '''
                 }
             }
@@ -50,7 +50,7 @@ pipeline {
                 // Publish Robot results with dynamic file names
                 step([
                     $class              : 'RobotPublisher',
-                    outputPath          : 'D:/Automate/RobotFramework/Results/TC_login',
+                    outputPath          : 'D:/RobotFramework/Results/TC_login',
                     outputFileName      : outputFileName,
                     reportFileName      : reportFileName,
                     logFileName         : logFileName,
