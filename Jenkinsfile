@@ -20,10 +20,12 @@ pipeline {
                     // Load the data file
                     def dataFile = load 'jenkinsdata'
 
+                    echo "dataFile: ${dataFile}" 
+
                     // Use the parameter as the key
                     def keyToRetrieve = params.BATFILE_NAME
 
-                    echo "Converted result path: ${keyToRetrieve}" 
+                    echo "keyToRetrieve: ${keyToRetrieve}" 
                     
                     // Retrieve the data
                     def convertData = dataFile.getData(keyToRetrieve)
