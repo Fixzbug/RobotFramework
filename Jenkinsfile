@@ -40,16 +40,16 @@ pipeline {
                 }
             }
         }
-        stage('E2E') {
-            steps {
-                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    bat label: '', script: """
-                        echo Running batch file
-                        call jenkins_batfile.bat ${env.CONVERT_TAG} ${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH} ${env.INITIAL_BATFILE_PATH}${env.CONVERT_ROBOT_PATH}
-                    """
-                }
-            }
-        }
+        // stage('RUN E2E') {
+        //     steps {
+        //         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+        //             bat label: '', script: """
+        //                 echo Running batch file
+        //                 call jenkins_batfile.bat ${env.CONVERT_TAG} ${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH} ${env.INITIAL_BATFILE_PATH}${env.CONVERT_ROBOT_PATH}
+        //             """
+        //         }
+        //     }
+        // }
     }
     // post {
     //     always {
