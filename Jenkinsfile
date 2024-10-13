@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-        INITIAL_BATFILE_PATH = 'C:/ProgramData/Jenkins/.jenkins/workspace/CI_RL/'
-        INITIAL_RESULT_PATH = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Result\\CI_RL\\'
+        INITIAL_BATFILE_PATH = 'C:/ProgramData/Jenkins/.jenkins/workspace/Automate/'
+        INITIAL_RESULT_PATH = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Result\\Automate\\'
     }
     stages {
         stage('Check Python and Robot Framework') {
