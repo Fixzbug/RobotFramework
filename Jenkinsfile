@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label 'Automate-Test'
-    }
+    agent any
     environment {
         INITIAL_BATFILE_PATH = 'C:/ProgramData/Jenkins/.jenkins/workspace/Automate/'
         INITIAL_RESULT_PATH = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Automate\\Result\\'
