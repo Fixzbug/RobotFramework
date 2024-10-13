@@ -4,7 +4,7 @@ pipeline {
     }
     environment {
         INITIAL_BATFILE_PATH = 'C:/ProgramData/Jenkins/.jenkins/workspace/Automate/'
-        INITIAL_RESULT_PATH = 'D:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Automate\\Result\\'
+        INITIAL_RESULT_PATH = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Automate\\Result\\'
     }
     stages {
         stage('Check Python and Robot Framework') {
