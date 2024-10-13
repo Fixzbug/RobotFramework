@@ -51,7 +51,7 @@ ${Excel_name}    DATAFILE_WORKFLOW_TYPE_01
 #     Login_page.SET FORMAT DATA TYPE 01 - USING    row=TC    start_at_case=1   end_at_case=${data_count_row}    user_level=${user_level}    # auto count row
 
 
-TC002 - TEST
-    [Tags]    TC002
+TC001 - TEST
+    [Tags]    TC001
     BuiltIn.Log    TEST    WARN
     # BuiltIn.Sleep    10s
