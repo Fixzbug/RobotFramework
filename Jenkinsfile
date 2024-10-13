@@ -23,7 +23,7 @@ pipeline {
                     // Use the parameter as the key
                     def keyToRetrieve = params.BATFILE_NAME
 
-                    echo ${keyToRetrieve} 
+                    echo "Converted result path: ${keyToRetrieve}" 
                     
                     // Retrieve the data
                     def convertData = dataFile.getData(keyToRetrieve)
