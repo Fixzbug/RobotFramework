@@ -6,7 +6,7 @@ def getData(String key) {
             'robotpath' : 'Automate/Testcase/SIT/TC_login.robot'
         ]
     ]
-    return dataMap[key] ? : 'Key not found'
+    return dataMap[key]? : 'Key not found'
 }
 
 // Return the function for external use
