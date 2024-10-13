@@ -30,16 +30,27 @@ pipeline {
                     // Retrieve the data
                     def convertData = dataFile.getData(keyToRetrieve)
 
-                    // Check if the data is valid
-                    if (convertData instanceof String) {
-                        error "Data retrieval failed: ${convertData}"
+                    // Check if the data was found
+                    if (convertData == null) {
+                        // Handle missing key
+                        echo "Warning: No data found for key '${keyToRetrieve}'"
+                        
+                        // Optionally set default values here or decide how to handle this case
+                        env.CONVERT_TAG = 'DEFAULT_TAG'
+                        env.CONVERT_RESULT_PATH = 'DEFAULT_RESULT_PATH'
+                        env.CONVERT_ROBOT_PATH = 'DEFAULT_ROBOT_PATH'
+                    } else {
+                        // Check if the data is valid
+                        if (convertData instanceof String) {
+                            error "Data retrieval failed: ${convertData}"
+                        }
+                        // Set environment variables
+                        env.CONVERT_TAG = convertData.tag
+                        env.CONVERT_RESULT_PATH = convertData.resultpath
+                        env.CONVERT_ROBOT_PATH = convertData.robotpath
+                        // Output the results
+                        echo "Converted result path: ${env.CONVERT_RESULT_PATH}"
                     }
-                    // Set environment variables
-                    env.CONVERT_TAG = convertData.tag
-                    env.CONVERT_RESULT_PATH = convertData.resultpath
-                    env.CONVERT_ROBOT_PATH = convertData.robotpath
-                    // Output the results
-                    echo "Converted result path: ${env.CONVERT_RESULT_PATH}"
 
                 }
             }

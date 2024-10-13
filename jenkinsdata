@@ -6,8 +6,7 @@ def getData(String key) {
             'robotpath' : 'Automate/Testcase/SIT/TC_login.robot'
         ]
     ]
-    return dataMap[key] ?: 'Key not found'
+    
+    // Return data if key exists, else null (or could use default values here)
+    return dataMap[key] ?: null
 }
-
-// Return the function for external use
-return this
