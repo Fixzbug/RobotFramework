@@ -1,0 +1,22 @@
+def getData(String key) {
+    def dataMap = [
+        /*
+         ██████╗ ███╗   ██╗ ██████╗                                                                                     
+        ██╔════╝ ████╗  ██║██╔═══██╗                                                                                    
+        ██║  ███╗██╔██╗ ██║██║   ██║                                                                                    
+        ██║   ██║██║╚██╗██║██║   ██║                                                                                    
+        ╚██████╔╝██║ ╚████║╚██████╔╝                                                                                    
+         ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝     
+        */
+        '01_E2E_UAT': [
+            'tag': 'GNO_1',
+            'resultpath': 'Autotmate\\01_E2E_UAT\\TC_login',
+            'robotpath' : 'Autotmate/01_E2E_UAT/Testcase/SIT/TC_login.robot'
+        ]
+    ]
+    
+    return dataMap[key] ?: 'Key not found'
+}
+
+// Return the function for external use
+return this
