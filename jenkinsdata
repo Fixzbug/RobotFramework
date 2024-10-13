@@ -10,8 +10,8 @@ def getData(String key) {
         */
         '01_E2E_UAT': [
             'tag': 'TC002',
-            'resultpath': 'Autotmate\\01_E2E_UAT\\TC_login',
-            'robotpath' : 'Autotmate/01_E2E_UAT/Testcase/SIT/TC_login.robot'
+            'resultpath': 'Autotmate\\TC_login',
+            'robotpath' : 'Autotmate/Testcase/SIT/TC_login.robot'
         ]
     ]
     
