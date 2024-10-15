@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     // Load the data file
-                    def dataFile = load 'jenkinsfiledata'
+                    def dataFile = load 'jenkinsdata'
 
                     // echo "dataFile: ${dataFile}" 
 
