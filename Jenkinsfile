@@ -3,7 +3,7 @@ pipeline {
     parameters {
         choice(
             name: 'BATFILE_NAME',   // Name of the parameter
-            choices: ['01_E2E_UAT', '02_E2E_UAT'],  // List of choices
+            choices: ['', ''],  // List of choices
                 description: 'Select the environment to deploy to'  // Description shown to the user
             )
     }
