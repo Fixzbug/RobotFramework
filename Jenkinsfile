@@ -1,5 +1,12 @@
 pipeline {
     agent any
+    parameters {
+        choice(
+            name: 'BATFILE_NAME',   // Name of the parameter
+            choices: ['01_E2E_UAT', '02_E2E_UAT'],  // List of choices
+                description: 'Select the environment to deploy to'  // Description shown to the user
+            )
+    }
     environment {
         INITIAL_BATFILE_PATH = 'C:/ProgramData/Jenkins/.jenkins/workspace/Automate/'
         INITIAL_RESULT_PATH = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Result\\Automate\\'
@@ -13,20 +20,18 @@ pipeline {
                     '''
                 }
             }
-        } 
+        }
         stage('Convert Parameter') {
             steps {
                 script {
                     // Load the data file
                     def dataFile = load 'jenkinsdata'
 
-                    echo "keyToRetrieve: ${dataFile}" 
-
                     // Use the parameter as the key
-                    def keyToRetrieve = "01_E2E_UAT"
+                    def keyToRetrieve = params.BATFILE_NAME
 
-                    echo "keyToRetrieve: ${keyToRetrieve}" 
-                    
+                    echo "keyToRetrieve: ${keyToRetrieve}"
+
                     // Retrieve the data
                     def convertData = dataFile.getData(keyToRetrieve)
 
@@ -44,28 +49,27 @@ pipeline {
                     echo "Converted result path: ${env.CONVERT_RESULT_PATH}"
                     echo "Converted result path: ${env.CONVERT_ROBOT_PATH}"
 
-                    // // Check if the data was found
-                    // if (convertData == null) {
-                    //     // Handle missing key
-                    //     echo "Warning: No data found for key '${keyToRetrieve}'"
-                        
-                    //     // Optionally set default values here or decide how to handle this case
-                    //     env.CONVERT_TAG = 'DEFAULT_TAG'
-                    //     env.CONVERT_RESULT_PATH = 'DEFAULT_RESULT_PATH'
-                    //     env.CONVERT_ROBOT_PATH = 'DEFAULT_ROBOT_PATH'
-                    // } else {
-                    //     // Check if the data is valid
-                    //     if (convertData instanceof String) {
-                    //         error "Data retrieval failed: ${convertData}"
-                    //     }
-                    //     // Set environment variables
-                    //     env.CONVERT_TAG = convertData.tag
-                    //     env.CONVERT_RESULT_PATH = convertData.resultpath
-                    //     env.CONVERT_ROBOT_PATH = convertData.robotpath
-                    //     // Output the results
-                    //     echo "Converted result path: ${env.CONVERT_RESULT_PATH}"
-                    // }
+                    // Check if the data was found
+                    if (convertData == null) {
+                        // Handle missing key
+                        echo "Warning: No data found for key '${keyToRetrieve}'"
 
+                        // Optionally set default values here or decide how to handle this case
+                        env.CONVERT_TAG = 'DEFAULT_TAG'
+                        env.CONVERT_RESULT_PATH = 'DEFAULT_RESULT_PATH'
+                        env.CONVERT_ROBOT_PATH = 'DEFAULT_ROBOT_PATH'
+                    } else {
+                        // Check if the data is valid
+                        if (convertData instanceof String) {
+                            error "Data retrieval failed: ${convertData}"
+                        }
+                        // Set environment variables
+                        env.CONVERT_TAG = convertData.tag
+                        env.CONVERT_RESULT_PATH = convertData.resultpath
+                        env.CONVERT_ROBOT_PATH = convertData.robotpath
+                        // Output the results
+                        echo "Converted result path: ${env.CONVERT_RESULT_PATH}"
+                    }
                 }
             }
         }
@@ -85,27 +89,27 @@ pipeline {
     //         script {
     //             def scriptOutput = bat(script: "findoutput.bat ${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH}", returnStdout: true).trim()
     //             echo "Output from external script: ${scriptOutput}"
-                
+
     //             def outputLength = scriptOutput.length()
     //             def startIndex = outputLength - 16
     //             def trimmedName = scriptOutput.substring(startIndex)
     //             echo "Trimmed variable name: ${trimmedName}"
-                
+
     //             def outputFileName = "output${trimmedName}.xml"
     //             def reportFileName = "report${trimmedName}.html"
     //             def logFileName = "log${trimmedName}.html"
 
-    //             // Publish Robot results with dynamic file names
-    //             step([
-    //                 $class              : 'RobotPublisher',
-    //                 outputPath          : "${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH}",
-    //                 outputFileName      : outputFileName,
-    //                 reportFileName      : reportFileName,
-    //                 logFileName         : logFileName,
-    //                 disableArchiveOutput: true,
-    //                 otherFiles          : "*.png,*.jpg"
-    //             ])
-    //         }
-    //     }
-    // }
+//             // Publish Robot results with dynamic file names
+//             step([
+//                 $class              : 'RobotPublisher',
+//                 outputPath          : "${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH}",
+//                 outputFileName      : outputFileName,
+//                 reportFileName      : reportFileName,
+//                 logFileName         : logFileName,
+//                 disableArchiveOutput: true,
+//                 otherFiles          : "*.png,*.jpg"
+//             ])
+//         }
+//     }
+// }
 }
