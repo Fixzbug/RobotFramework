@@ -20,6 +20,8 @@ pipeline {
                     // Load the data file
                     def dataFile = load 'jenkinsdata'
 
+                    echo "keyToRetrieve: ${dataFile}" 
+
                     // Use the parameter as the key
                     def keyToRetrieve = params.BATFILE_NAME
 
