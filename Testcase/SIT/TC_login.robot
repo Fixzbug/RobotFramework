@@ -55,3 +55,8 @@ TC001 - TEST
     [Tags]    TC001
     BuiltIn.Log    TEST    WARN
     # BuiltIn.Sleep    10s
+
+TC002 - TEST
+    [Tags]    TC002
+    BuiltIn.Log    TEST    WARN
+    # BuiltIn.Sleep    10s
