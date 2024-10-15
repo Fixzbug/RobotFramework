@@ -18,9 +18,9 @@ pipeline {
             steps {
                 script {
                     // Load the data file
-                    def dataFile = load 'jenkinsdata'
+                    def dataFile = load 'jenkinsfiledata'
 
-                    echo "dataFile: ${dataFile}" 
+                    // echo "dataFile: ${dataFile}" 
 
                     // Use the parameter as the key
                     def keyToRetrieve = params.BATFILE_NAME
@@ -29,6 +29,17 @@ pipeline {
                     
                     // Retrieve the data
                     def convertData = dataFile.getData(keyToRetrieve)
+
+                    // // Check if the data is valid
+                    // if (convertData instanceof String) {
+                    //     error "Data retrieval failed: ${convertData}"
+                    // }
+                    // // Set environment variables
+                    // env.CONVERT_TAG = convertData.tag
+                    // env.CONVERT_RESULT_PATH = convertData.resultpath
+                    // env.CONVERT_ROBOT_PATH = convertData.robotpath
+                    // // Output the results
+                    // echo "Converted result path: ${env.CONVERT_RESULT_PATH}"
 
                     // Check if the data was found
                     if (convertData == null) {
