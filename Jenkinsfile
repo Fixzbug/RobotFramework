@@ -1,12 +1,12 @@
 pipeline {
     agent any
-    parameters {
-        choice(
-            name: 'BATFILE_NAME',   // Name of the parameter
-            choices: ['', ''],  // List of choices
-                description: 'Select the environment to deploy to'  // Description shown to the user
-            )
-    }
+    // parameters {
+    //     choice(
+    //         name: 'BATFILE_NAME',   // Name of the parameter
+    //         choices: ['', ''],  // List of choices
+    //             description: 'Select the environment to deploy to'  // Description shown to the user
+    //         )
+    // }
     environment {
         INITIAL_BATFILE_PATH = 'C:/ProgramData/Jenkins/.jenkins/workspace/Automate/'
         INITIAL_RESULT_PATH = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Result\\Automate\\'
@@ -35,20 +35,6 @@ pipeline {
                     // Retrieve the data
                     def convertData = dataFile.getData(keyToRetrieve)
 
-                    // Check if the data is valid
-                    if (convertData instanceof String) {
-                        error "Data retrieval failed: ${convertData}"
-                    }
-                    // Set environment variables
-                    env.CONVERT_TAG = convertData.tag
-                    env.CONVERT_RESULT_PATH = convertData.resultpath
-                    env.CONVERT_ROBOT_PATH = convertData.robotpath
-
-                    // Output the results
-                    echo "Converted result path: ${env.CONVERT_TAG}"
-                    echo "Converted result path: ${env.CONVERT_RESULT_PATH}"
-                    echo "Converted result path: ${env.CONVERT_ROBOT_PATH}"
-
                     // Check if the data was found
                     if (convertData == null) {
                         // Handle missing key
@@ -68,7 +54,9 @@ pipeline {
                         env.CONVERT_RESULT_PATH = convertData.resultpath
                         env.CONVERT_ROBOT_PATH = convertData.robotpath
                         // Output the results
+                        echo "Converted result path: ${env.CONVERT_TAG}"
                         echo "Converted result path: ${env.CONVERT_RESULT_PATH}"
+                        echo "Converted result path: ${env.CONVERT_ROBOT_PATH}"
                     }
                 }
             }
@@ -84,32 +72,33 @@ pipeline {
             }
         }
     }
-    // post {
-    //     always {
-    //         script {
-    //             def scriptOutput = bat(script: "findoutput.bat ${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH}", returnStdout: true).trim()
-    //             echo "Output from external script: ${scriptOutput}"
+    post {
+        always {
+            script {
+                def scriptOutput = bat(script: "findoutput.bat ${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH}", returnStdout: true).trim()
+                echo "Output from external script: ${scriptOutput}"
 
-    //             def outputLength = scriptOutput.length()
-    //             def startIndex = outputLength - 16
-    //             def trimmedName = scriptOutput.substring(startIndex)
-    //             echo "Trimmed variable name: ${trimmedName}"
+                def outputLength = scriptOutput.length()
+                def startIndex = outputLength - 16
+                def trimmedName = scriptOutput.substring(startIndex)
+                echo "Trimmed variable name: ${trimmedName}"
 
-    //             def outputFileName = "output${trimmedName}.xml"
-    //             def reportFileName = "report${trimmedName}.html"
-    //             def logFileName = "log${trimmedName}.html"
+                def outputFileName = "output${trimmedName}.xml"
+                def reportFileName = "report${trimmedName}.html"
+                def logFileName = "log${trimmedName}.html"
 
-//             // Publish Robot results with dynamic file names
-//             step([
-//                 $class              : 'RobotPublisher',
-//                 outputPath          : "${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH}",
-//                 outputFileName      : outputFileName,
-//                 reportFileName      : reportFileName,
-//                 logFileName         : logFileName,
-//                 disableArchiveOutput: true,
-//                 otherFiles          : "*.png,*.jpg"
-//             ])
-//         }
-//     }
-// }
+                // Publish Robot results with dynamic file names
+                step([
+                    $class              : 'RobotPublisher',
+                    outputPath          : "${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH}",
+                    outputFileName      : outputFileName,
+                    reportFileName      : reportFileName,
+                    logFileName         : logFileName,
+                    disableArchiveOutput: true,
+                    otherFiles          : "*.png,*.jpg"
+                ])
+            }
+        }
+    }
 }
+
