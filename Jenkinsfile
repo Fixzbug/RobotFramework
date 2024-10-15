@@ -12,11 +12,20 @@ pipeline {
         INITIAL_RESULT_PATH = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Result\\Automate\\'
     }
     stages {
-        stage('Check Python and Robot Framework') {
+        stage('Check Python version') {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     bat label: '', script: '''
                         python --version
+                    '''
+                }
+            }
+        }
+        stage('Check Robot Framework version') {
+            steps {
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    bat label: '', script: '''
+                        robot --version
                     '''
                 }
             }
