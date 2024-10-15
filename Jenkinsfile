@@ -23,7 +23,7 @@ pipeline {
                     echo "keyToRetrieve: ${dataFile}" 
 
                     // Use the parameter as the key
-                    def keyToRetrieve = params.BATFILE_NAME
+                    def keyToRetrieve = "01_E2E_UAT"
 
                     echo "keyToRetrieve: ${keyToRetrieve}" 
                     
