@@ -21,15 +21,15 @@ pipeline {
                 }
             }
         }
-        stage('Check Robot Framework version') {
-            steps {
-                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    bat label: '', script: '''
-                        robot --version
-                    '''
-                }
-            }
-        }
+        // stage('Check Robot Framework version') {
+        //     steps {
+        //         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+        //             bat label: '', script: '''
+        //                 robot --version
+        //             '''
+        //         }
+        //     }
+        // }
         stage('Convert Parameter') {
             steps {
                 script {
