@@ -1,7 +1,18 @@
 pipeline {
     agent any
+    // parameters {
+    //     choice(
+    //         name: 'BATFILE_NAME',   // Name of the parameter
+    //         choices: ['', ''],  // List of choices
+    //             description: 'Select the environment to deploy to'  // Description shown to the user
+    //         )
+    // }
+    environment {
+        INITIAL_BATFILE_PATH = 'C:/ProgramData/Jenkins/.jenkins/workspace/Automate/'
+        INITIAL_RESULT_PATH = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Result\\Automate\\'
+    }
     stages {
-        stage('Check Python and Robot Framework') {
+        stage('Check Python version') {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     bat label: '', script: '''
@@ -9,14 +20,60 @@ pipeline {
                     '''
                 }
             }
-        } 
-        stage('E2E') {
+        }
+        // stage('Check Robot Framework version') {
+        //     steps {
+        //         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+        //             bat label: '', script: '''
+        //                 robot --version
+        //             '''
+        //         }
+        //     }
+        // }
+        stage('Convert Parameter') {
+            steps {
+                script {
+                    // Load the data file
+                    def dataFile = load 'jenkinsdata'
+
+                    // Use the parameter as the key
+                    def keyToRetrieve = params.BATFILE_NAME
+
+                    // Retrieve the data
+                    def convertData = dataFile.getData(keyToRetrieve)
+
+                    // Check if the data was found
+                    if (convertData == null) {
+                        // Handle missing key
+                        echo "Warning: No data found for key '${keyToRetrieve}'"
+                        // Optionally set default values here or decide how to handle this case
+                        env.CONVERT_TAG = 'DEFAULT_TAG'
+                        env.CONVERT_RESULT_PATH = 'DEFAULT_RESULT_PATH'
+                        env.CONVERT_ROBOT_PATH = 'DEFAULT_ROBOT_PATH'
+                    } else {
+                        // Check if the data is valid
+                        if (convertData instanceof String) {
+                            error "Data retrieval failed: ${convertData}"
+                        }
+                        // Set environment variables
+                        env.CONVERT_TAG = convertData.tag
+                        env.CONVERT_RESULT_PATH = convertData.resultpath
+                        env.CONVERT_ROBOT_PATH = convertData.robotpath
+                        // Output the results
+                        echo "Converted result path: ${env.CONVERT_TAG}"
+                        echo "Converted result path: ${env.CONVERT_RESULT_PATH}"
+                        echo "Converted result path: ${env.CONVERT_ROBOT_PATH}"
+                    }
+                }
+            }
+        }
+        stage('RUN E2E') {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    bat label: '', script: '''
-                        echo Running batch file: TC_login.bat
-                        call D:\\RobotFramework\\bat_file\\TC_login.bat
-                    '''
+                    bat label: '', script: """
+                        echo Running batch file ${env.CONVERT_TAG} ${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH} ${env.INITIAL_BATFILE_PATH}${env.CONVERT_ROBOT_PATH}
+                        call jenkins_batfile.bat ${env.CONVERT_TAG} ${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH} ${env.INITIAL_BATFILE_PATH}${env.CONVERT_ROBOT_PATH}
+                    """
                 }
             }
         }
@@ -24,29 +81,22 @@ pipeline {
     post {
         always {
             script {
-                // Execute the external batch script and capture its output
-                def scriptOutput = bat(script: 'findoutput.bat', returnStdout: true).trim()
+                def scriptOutput = bat(script: "findoutput.bat ${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH}", returnStdout: true).trim()
                 echo "Output from external script: ${scriptOutput}"
-                
-                // Determine the length of the script output
+
                 def outputLength = scriptOutput.length()
-                
-                // Calculate the start index for the substring to remove the last 10 digits
                 def startIndex = outputLength - 16
-                
-                // Extract the substring to remove the last 10 digits
                 def trimmedName = scriptOutput.substring(startIndex)
                 echo "Trimmed variable name: ${trimmedName}"
-                
-                // Define variables for file names based on scriptOutput
+
                 def outputFileName = "output${trimmedName}.xml"
                 def reportFileName = "report${trimmedName}.html"
                 def logFileName = "log${trimmedName}.html"
-                
+
                 // Publish Robot results with dynamic file names
                 step([
                     $class              : 'RobotPublisher',
-                    outputPath          : 'D:/RobotFramework/Results/TC_login',
+                    outputPath          : "${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH}",
                     outputFileName      : outputFileName,
                     reportFileName      : reportFileName,
                     logFileName         : logFileName,
@@ -57,3 +107,4 @@ pipeline {
         }
     }
 }
+
