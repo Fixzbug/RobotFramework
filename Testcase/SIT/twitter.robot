@@ -7,5 +7,9 @@ Resource    ${CURDIR}/../../Import/Path_import.robot    # robotcode: ignore
 Login
     [Tags]    TC002
     BuiltIn.Log    TEST    WARN
-    SeleniumLibrary.Open Browser    url=https://x.com/home    browser=Chrome
+    SeleniumLibrary.Open Browser    url=https://www.saucedemo.com/    browser=Chrome
+    SeleniumLibrary.Input Text    id=user-name    standard_user    
+    SeleniumLibrary.Input Text    id=password    secret_sauce 
+    SeleniumLibrary.Click Button    id=login-button
+
 

@@ -30,12 +30,12 @@ ${REMOVE_USER}          removeuser
 TC_01 - login
     [Documentation]    Test the login functionality.
     [Tags]    TC_01
-    Common_feature.KEYWORD_COMMON_FETURE (READ DATA BY JSON) ADMIN PAGE  ${LOGIN}
+    Common_feature.KEYWORD_COMMON_FETURE (READ DATA BY JSON) ADMIN PAGE    ${LOGIN}
 
 TC_02 - register
     [Documentation]    Test the user registration functionality.
     [Tags]    TC_02
-    Common_feature.KEYWORD_COMMON_FETURE (READ DATA BY JSON) ADMIN PAGE  ${ADDUSER}
+    Common_feature.KEYWORD_COMMON_FETURE (READ DATA BY JSON) ADMIN PAGE    ${ADDUSER}
 
 TC_03 - update user
     [Documentation]    Test the update user profile functionality.
