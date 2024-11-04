@@ -12,7 +12,7 @@ pipeline {
         INITIAL_RESULT_PATH = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Result\\Automate\\'
     }
     stages {
-        stage('Check Python version') {
+        stage('Check Python version ทดสอบ') {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     bat label: '', script: '''
