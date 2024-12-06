@@ -22,24 +22,24 @@ pipeline {
                 }
             }
         }
-        stage('Check pip list version') {
-            steps {
-                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    bat label: '', script: '''
-                        pip list
-                    '''
-                }
-            }
-        }
-         stage('Check pip install requirements') {
-            steps {
-                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    bat label: '', script: '''
-                         pip install -r requirements.txt
-                    '''
-                }
-            }
-        }
+        // stage('Check pip list version') {
+        //     steps {
+        //         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+        //             bat label: '', script: '''
+        //                 pip list
+        //             '''
+        //         }
+        //     }
+        // }
+        // stage('Check pip install requirements') {
+        //     steps {
+        //         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+        //             bat label: '', script: '''
+        //                 pip install -r requirements.txt
+        //             '''
+        //         }
+        //     }
+        // }
         stage('Convert Parameter') {
             steps {
                 script {
