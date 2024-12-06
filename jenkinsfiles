@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout Code From Git') {
+            steps {
+                // Replace with your Git repository URL
+                git branch: 'main', url: 'https://github.com/your-repo.git'
+            }
+        }
+        
+        stage('Run Test Automate') {
+            steps {
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    bat label: '', script: '''
+                        python --version
+                    '''
+                }
+                // Replace with the command to run your automated tests
+                sh 'robot --outputdir results tests/'
+            }
+        }
+        
+        stage('Send Result To Jenkins') {
+            steps {
+                // Publish the test results, assuming Robot Framework output
+                robot outputPath: 'results'
+            }
+        }
+    }
+}

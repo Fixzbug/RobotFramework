@@ -1,0 +1,7 @@
+numpy
+pandas
+requests
+psutil
+win32
+openpyxl
+pymal

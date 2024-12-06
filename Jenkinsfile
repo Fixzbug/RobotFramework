@@ -17,19 +17,29 @@ pipeline {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     bat label: '', script: '''
                         python --version
+                       
                     '''
                 }
             }
         }
-        // stage('Check Robot Framework version') {
-        //     steps {
-        //         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-        //             bat label: '', script: '''
-        //                 robot --version
-        //             '''
-        //         }
-        //     }
-        // }
+        stage('Check pip list version') {
+            steps {
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    bat label: '', script: '''
+                        pip list
+                    '''
+                }
+            }
+        }
+         stage('Check pip install requirements') {
+            steps {
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    bat label: '', script: '''
+                         pip install -r requirements.txt
+                    '''
+                }
+            }
+        }
         stage('Convert Parameter') {
             steps {
                 script {
