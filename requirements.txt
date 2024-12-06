@@ -1,3 +1,9 @@
+robotframework
+robotframework-seleniumLibrary
+robotframework-appium
+robotframework-jsonlibrary
+robotframework-debuglibrary
+pytest
 numpy
 pandas
 requests
@@ -5,3 +11,5 @@ psutil
 win32
 openpyxl
 pymal
+zipfile36
+paho-mqtt
