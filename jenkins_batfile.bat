@@ -5,7 +5,9 @@ SET robotpath=%3
 
 echo input: %1
 echo tag: %tag%   
-@REM echo resultpath: %resultpath%   
-@REM echo robotpath: %robotpath%   
-echo robot -T %tag% -L trace -d %resultpath% %robotpath%
-robot -T %tag% -L trace -d %resultpath% %robotpath%
+echo resultpath: %resultpath%   
+echo robotpath: %robotpath%   
+@REM echo robot -T %tag% -L trace -d %resultpath% %robotpath%
+@REM robot -T %tag% -L trace -d %resultpath% %robotpath%
+echo robot %tag% -L trace -d %resultpath% %robotpath%
+robot %tag% -L trace -d %resultpath% %robotpath%
