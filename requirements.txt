@@ -8,7 +8,7 @@ numpy
 pandas
 requests
 psutil
-win32
+pywin32
 openpyxl
 pymal
 zipfile36
