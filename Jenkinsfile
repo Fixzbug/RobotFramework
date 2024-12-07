@@ -77,13 +77,24 @@ pipeline {
                 }
             }
         }
-        stage('RUN E2E') {
+        // stage('RUN E2E') {
+        //     steps {
+        //         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+        //             bat label: '', script: """
+        //                 echo Running batch file ${env.CONVERT_TAG} ${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH} ${env.INITIAL_BATFILE_PATH}${env.CONVERT_ROBOT_PATH}
+        //                 call jenkins_batfile.bat ${env.CONVERT_TAG} ${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH} ${env.INITIAL_BATFILE_PATH}${env.CONVERT_ROBOT_PATH}
+        //             """
+        //         }
+        //     }
+        // }
+
+        stage('RUN E2E FOR TEST ONLY FILE') {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    bat label: '', script: """
-                        echo Running batch file ${env.CONVERT_TAG} ${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH} ${env.INITIAL_BATFILE_PATH}${env.CONVERT_ROBOT_PATH}
-                        call jenkins_batfile.bat ${env.CONVERT_TAG} ${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH} ${env.INITIAL_BATFILE_PATH}${env.CONVERT_ROBOT_PATH}
-                    """
+                    bat label: '', script: '''
+                        echo Running batch file: TC_login.bat
+                        call C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Automate\\test.bat
+                    '''
                 }
             }
         }

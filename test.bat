@@ -1,0 +1,1 @@
+robot -T -i TC001 -L trace -d C:\ProgramData\Jenkins\.jenkins\workspace\Result\Automate\TC_login C:/ProgramData/Jenkins/.jenkins/workspace/Automate/Testcase/SIT/TC_login.robot
