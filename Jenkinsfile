@@ -13,18 +13,18 @@ pipeline {
 
     stages {
 
-        stage('Run Groovy Script') {
-            steps {
-                script {
-                    // Define your Groovy script
-                    def jobName = "Automate"
-                    def job = Jenkins.instance.getItem(jobName)
-                    job.getBuilds().each { it.delete() }
-                    job.nextBuildNumber = 1
-                    job.save()
-                }
-            }
-        }
+        // stage('Run Groovy Script') {
+        //     steps {
+        //         script {
+        //             // Define your Groovy script
+        //             def jobName = "Automate"
+        //             def job = Jenkins.instance.getItem(jobName)
+        //             job.getBuilds().each { it.delete() }
+        //             job.nextBuildNumber = 1
+        //             job.save()
+        //         }
+        //     }
+        // }
         
         stage('Check Python version') {
             steps {
