@@ -3,11 +3,9 @@ IF NOT "%1"=="null" SET tag=-i %1
 SET resultpath=%2
 SET robotpath=%3
 
-echo input: %1
-echo tag: %tag%   
-echo resultpath: %resultpath%   
-echo robotpath: %robotpath%   
-@REM echo robot -T %tag% -L trace -d %resultpath% %robotpath%
-@REM robot -T %tag% -L trace -d %resultpath% %robotpath%
-echo robot %tag% -L trace -d %resultpath% %robotpath%
-robot %tag% -L trace -d %resultpath% %robotpath%
+@REM echo input: %1
+@REM echo tag: %tag%   
+@REM echo resultpath: %resultpath%   
+@REM echo robotpath: %robotpath%   
+echo robot -T %tag% -L trace -d %resultpath% %robotpath%
+robot -T %tag% -L trace -d %resultpath% %robotpath%
