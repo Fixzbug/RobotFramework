@@ -9,6 +9,16 @@ def getData(String key) {
             'tag':'TC002',
             'resultpath':'TC_login',
             'robotpath':'Testcase/SIT/TC_login.robot'
+        ],
+        '03_E2E_UAT':[
+            'tag':'TC003',
+            'resultpath':'TC_login',
+            'robotpath':'Testcase/SIT/TC_login.robot'
+        ],
+        '04_E2E_UAT':[
+            'tag':'TC004',
+            'resultpath':'TC_login',
+            'robotpath':'Testcase/SIT/TC_login.robot'
         ]
     ]
     return dataMap[key] ?: 'Key not found'
