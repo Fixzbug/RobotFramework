@@ -13,19 +13,6 @@ pipeline {
 
     stages {
 
-        // stage('Run Groovy Script') {
-        //     steps {
-        //         script {
-        //             // Define your Groovy script
-        //             def jobName = "Automate"
-        //             def job = Jenkins.instance.getItem(jobName)
-        //             job.getBuilds().each { it.delete() }
-        //             job.nextBuildNumber = 1
-        //             job.save()
-        //         }
-        //     }
-        // }
-        
         stage('Check Python version') {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
@@ -53,6 +40,19 @@ pipeline {
                     bat label: 'Install Requirements', script: '''
                         pip install -r requirements.txt
                     '''
+                }
+            }
+        }
+
+        stage('Run Groovy Script') {
+            steps {
+                script {
+                    // Define your Groovy script
+                    def jobName = "Automate"
+                    def job = Jenkins.instance.getItem(jobName)
+                    job.getBuilds().each { it.delete() }
+                    job.nextBuildNumber = 1
+                    job.save()
                 }
             }
         }
