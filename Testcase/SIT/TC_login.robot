@@ -1,6 +1,6 @@
 *** Settings ***
 Resource    ${CURDIR}/../../Import/Path_import.robot    # robotcode: ignore  
-# Test Teardown    Common_keyword.CLOSE ALL BROWSERS TEARDOWN
+Test Teardown    Common_keyword.CLOSE ALL BROWSERS TEARDOWN
 
 *** Variables ***
 ${DBUG}    FALSE
