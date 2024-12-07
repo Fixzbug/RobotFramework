@@ -8,7 +8,7 @@ pipeline {
 
     environment {
         INITIAL_BATFILE_PATH = 'C:/ProgramData/Jenkins/.jenkins/workspace/Automate/'
-        INITIAL_LIB = 'C:/ProgramData/Jenkins/.jenkins/workspace/Automate/Resources/Library/'
+        INITIAL_LIBRARY_PATH = 'C:/ProgramData/Jenkins/.jenkins/workspace/Automate/Resources/Library/'
         INITIAL_RESULT_PATH = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Result\\Automate\\'
     }
 
@@ -30,54 +30,36 @@ pipeline {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     bat label: 'Check chrome version', script: """
                         echo Running file: AutoupdateChrome.py
-                        cd ${env.INITIAL_LIB}
+                        cd ${env.INITIAL_LIBRARY_PATH}
                         python AutoupdateChrome.py
                     """
                 }
             }
         }
 
-        //  stage('Check pip list version') {
-        //     steps {
-        //         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-        //             bat label: 'Check pip version', script: '''
-        //                 pip list
-        //             '''
-        //         }
-        //     }
-        // }
+         stage('Check pip list version') {
+            steps {
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    bat label: 'Check pip version', script: '''
+                        pip list
+                    '''
+                }
+            }
+        }
         
-        // stage('Check pip install requirements') {
-        //     steps {
-        //         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-        //             bat label: 'Install Requirements', script: '''
-        //                 pip install -r requirements.txt
-        //             '''
-        //         }
-        //     }
-        // }
+        stage('Check pip install requirements') {
+            steps {
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    bat label: 'Install Requirements', script: '''
+                        pip install -r requirements.txt
+                    '''
+                }
+            }
+        }
 
         // stage('Run Groovy Script') {
         //     steps {
         //         script {
-
-        //             MAX_BUILDS = 5
-
-        //             // Loop over all jobs in Jenkins
-        //             for (job in Jenkins.instance.items) {
-        //                 println "Job: ${job.name}"
-
-        //                 // Get the list of builds (you may want to sort by build number or date)
-        //                 def builds = job.builds.reverse()  // Reverse to get the latest builds first
-
-        //                 // Keep only the most recent 'MAX_BUILDS' builds
-        //                 def buildsToDelete = builds.drop(MAX_BUILDS)  // Drop the first 'MAX_BUILDS' items
-
-        //                 // Loop over builds that should be deleted
-        //                 for (build in buildsToDelete) {
-        //                     println "Preparing to delete build: ${build.number}"
-        //                     // Uncomment the next line to delete the build
-        //                     // build.delete()
         //                 }
         //             }
         //         }
