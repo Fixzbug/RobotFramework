@@ -49,7 +49,7 @@ pipeline {
                 script {
                     // Define your Groovy script
                     def jobName = "Automate"
-                    def job = Jenkins.instance.getItem(jobName)
+                    def job = Jenkins.instance.getItemByFullName(jobName)
                     job.getBuilds().each { it.delete() }
                     job.nextBuildNumber = 1
                     job.save()
