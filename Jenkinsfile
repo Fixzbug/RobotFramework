@@ -1,16 +1,19 @@
 pipeline {
+    
     agent {
         node {
             label 'built-in'
         }
     }
+
     environment {
         INITIAL_BATFILE_PATH = 'C:/ProgramData/Jenkins/.jenkins/workspace/Automate/'
         INITIAL_RESULT_PATH = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Result\\Automate\\'
     }
 
     stages {
-        stage('Run Groovy Script') {
+
+         stage('Run Groovy Script') {
             steps {
                 script {
                     // Load and execute the Groovy script
@@ -30,9 +33,7 @@ pipeline {
                 }
             }
         }
-    }
 
-    stages {
         stage('Check Python version') {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
