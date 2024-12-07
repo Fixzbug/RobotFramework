@@ -1,12 +1,9 @@
 pipeline {
-    agent any
-    // parameters {
-    //     choice(
-    //         name: 'BATFILE_NAME',   // Name of the parameter
-    //         choices: ['', ''],  // List of choices
-    //             description: 'Select the environment to deploy to'  // Description shown to the user
-    //         )
-    // }
+    agent {
+        node {
+            label 'built-in'
+        }
+    }
     environment {
         INITIAL_BATFILE_PATH = 'C:/ProgramData/Jenkins/.jenkins/workspace/Automate/'
         INITIAL_RESULT_PATH = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Result\\Automate\\'
