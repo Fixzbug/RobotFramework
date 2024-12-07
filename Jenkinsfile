@@ -47,15 +47,15 @@ pipeline {
             }
         }
         
-        // stage('Check pip install requirements') {
-        //     steps {
-        //         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-        //             bat label: 'Install Requirements', script: '''
-        //                 pip install -r requirements.txt
-        //             '''
-        //         }
-        //     }
-        // }
+        stage('Check pip install requirements') {
+            steps {
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    bat label: 'Install Requirements', script: '''
+                        pip install -r requirements.txt
+                    '''
+                }
+            }
+        }
 
         stage('Convert Parameter') {
             steps {
