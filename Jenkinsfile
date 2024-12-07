@@ -13,16 +13,27 @@ pipeline {
 
     stages {
 
-        // stage('Check Python version') {
-        //     steps {
-        //         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-        //             bat label: 'Check Python version', script: '''
-        //                 python --version
+        stage('Check Python version') {
+            steps {
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    bat label: 'Check Python version', script: '''
+                        python --version
                        
-        //             '''
-        //         }
-        //     }
-        // }
+                    '''
+                }
+            }
+        }
+
+        stage('Check chrome version') {
+            steps {
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    bat label: '', script: '''
+                        echo Running file: AutoupdateChrome.py
+                        call C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Automate\\Resources\\AutoupdateChrome.py
+                    '''
+                }
+            }
+        }
 
         //  stage('Check pip list version') {
         //     steps {
@@ -44,32 +55,32 @@ pipeline {
         //     }
         // }
 
-        stage('Run Groovy Script') {
-            steps {
-                script {
+        // stage('Run Groovy Script') {
+        //     steps {
+        //         script {
 
-                    MAX_BUILDS = 5
+        //             MAX_BUILDS = 5
 
-                    // Loop over all jobs in Jenkins
-                    for (job in Jenkins.instance.items) {
-                        println "Job: ${job.name}"
+        //             // Loop over all jobs in Jenkins
+        //             for (job in Jenkins.instance.items) {
+        //                 println "Job: ${job.name}"
 
-                        // Get the list of builds (you may want to sort by build number or date)
-                        def builds = job.builds.reverse()  // Reverse to get the latest builds first
+        //                 // Get the list of builds (you may want to sort by build number or date)
+        //                 def builds = job.builds.reverse()  // Reverse to get the latest builds first
 
-                        // Keep only the most recent 'MAX_BUILDS' builds
-                        def buildsToDelete = builds.drop(MAX_BUILDS)  // Drop the first 'MAX_BUILDS' items
+        //                 // Keep only the most recent 'MAX_BUILDS' builds
+        //                 def buildsToDelete = builds.drop(MAX_BUILDS)  // Drop the first 'MAX_BUILDS' items
 
-                        // Loop over builds that should be deleted
-                        for (build in buildsToDelete) {
-                            println "Preparing to delete build: ${build.number}"
-                            // Uncomment the next line to delete the build
-                            // build.delete()
-                        }
-                    }
-                }
-            }
-        }
+        //                 // Loop over builds that should be deleted
+        //                 for (build in buildsToDelete) {
+        //                     println "Preparing to delete build: ${build.number}"
+        //                     // Uncomment the next line to delete the build
+        //                     // build.delete()
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
         stage('Convert Parameter') {
             steps {
@@ -118,16 +129,7 @@ pipeline {
                 }
             }
         }
-        // stage('RUN E2E FOR TEST ONLY FILE') {
-        //     steps {
-        //         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-        //             bat label: '', script: '''
-        //                 echo Running batch file: test.bat
-        //                 call C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Automate\\test.bat
-        //             '''
-        //         }
-        //     }
-        // }
+
     }
     post {
         always {
