@@ -8,6 +8,7 @@ pipeline {
 
     environment {
         INITIAL_BATFILE_PATH = 'C:/ProgramData/Jenkins/.jenkins/workspace/Automate/'
+        INITIAL_LIB = 'C:/ProgramData/Jenkins/.jenkins/workspace/Automate/Resources/Library/'
         INITIAL_RESULT_PATH = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Result\\Automate\\'
     }
 
@@ -29,7 +30,7 @@ pipeline {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     bat label: 'Check chrome version', script: """
                         echo Running file: AutoupdateChrome.py
-                        cd ${env.INITIAL_BATFILE_PATH}Resources
+                        cd ${env.INITIAL_LIB}
                         python AutoupdateChrome.py
                     """
                 }
