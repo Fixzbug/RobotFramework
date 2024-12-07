@@ -27,11 +27,11 @@ pipeline {
         stage('Check chrome version') {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    bat label: 'Check chrome version', script: '''
+                    bat label: 'Check chrome version', script: """
                         echo Running file: AutoupdateChrome.py
                         cd ${env.INITIAL_BATFILE_PATH}Resources
                         python AutoupdateChrome.py
-                    '''
+                    """
                 }
             }
         }
@@ -123,7 +123,7 @@ pipeline {
         stage('RUN E2E') {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    bat label: '', script: """
+                    bat label: 'RUN E2E', script: """
                         echo Running batch file ${env.CONVERT_TAG} ${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH} ${env.INITIAL_BATFILE_PATH}${env.CONVERT_ROBOT_PATH}
                         call jenkins_batfile.bat ${env.CONVERT_TAG} ${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH} ${env.INITIAL_BATFILE_PATH}${env.CONVERT_ROBOT_PATH}
                     """
