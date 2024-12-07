@@ -29,7 +29,8 @@ pipeline {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     bat label: 'Check chrome version', script: '''
                         echo Running file: AutoupdateChrome.py
-                        call C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Automate\\Resources\\AutoupdateChrome.py
+                        cd C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Automate\\Resources
+                        python AutoupdateChrome.py
                     '''
                 }
             }
