@@ -47,21 +47,27 @@ pipeline {
         stage('Run Groovy Script') {
             steps {
                 script {
-                   import jenkins.model.Jenkins
+                    // Import necessary classes
+                    import jenkins.model.Jenkins
                     import hudson.model.Job
 
                     MAX_BUILDS = 5
 
+                    // Loop over all jobs in Jenkins
                     for (job in Jenkins.instance.items) {
-                        println job.name
+                        println "Job: ${job.name}"
 
-                        def recent = job.builds.limit(MAX_BUILDS)
+                        // Get the list of builds (you may want to sort by build number or date)
+                        def builds = job.builds.reverse()  // Reverse to get the latest builds first
 
-                        for (build in job.builds) {
-                            if (!recent.contains(build)) {
-                            println "Preparing to delete: " + build
+                        // Keep only the most recent 'MAX_BUILDS' builds
+                        def buildsToDelete = builds.drop(MAX_BUILDS)  // Drop the first 'MAX_BUILDS' items
+
+                        // Loop over builds that should be deleted
+                        for (build in buildsToDelete) {
+                            println "Preparing to delete build: ${build.number}"
+                            // Uncomment the next line to delete the build
                             // build.delete()
-                            }
                         }
                     }
                 }
