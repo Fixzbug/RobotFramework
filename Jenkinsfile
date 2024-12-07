@@ -47,9 +47,6 @@ pipeline {
         stage('Run Groovy Script') {
             steps {
                 script {
-                    // Import necessary classes
-                    import jenkins.model.Jenkins
-                    import hudson.model.Job
 
                     MAX_BUILDS = 5
 
