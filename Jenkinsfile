@@ -13,36 +13,36 @@ pipeline {
 
     stages {
 
-        stage('Check Python version') {
-            steps {
-                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    bat label: 'Check Python version', script: '''
-                        python --version
+        // stage('Check Python version') {
+        //     steps {
+        //         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+        //             bat label: 'Check Python version', script: '''
+        //                 python --version
                        
-                    '''
-                }
-            }
-        }
+        //             '''
+        //         }
+        //     }
+        // }
 
-         stage('Check pip list version') {
-            steps {
-                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    bat label: 'Check pip version', script: '''
-                        pip list
-                    '''
-                }
-            }
-        }
+        //  stage('Check pip list version') {
+        //     steps {
+        //         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+        //             bat label: 'Check pip version', script: '''
+        //                 pip list
+        //             '''
+        //         }
+        //     }
+        // }
         
-        stage('Check pip install requirements') {
-            steps {
-                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    bat label: 'Install Requirements', script: '''
-                        pip install -r requirements.txt
-                    '''
-                }
-            }
-        }
+        // stage('Check pip install requirements') {
+        //     steps {
+        //         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+        //             bat label: 'Install Requirements', script: '''
+        //                 pip install -r requirements.txt
+        //             '''
+        //         }
+        //     }
+        // }
 
         stage('Run Groovy Script') {
             steps {
