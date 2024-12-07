@@ -17,15 +17,15 @@ TC001 - TEST
     BuiltIn.Log    TEST    WARN
 
 TC002 - TEST
-    [Tags]    TC002
+    [Tags]    TC001
     BuiltIn.Log    TEST    WARN
 
 TC003 - TEST
-    [Tags]    TC003
+    [Tags]    TC001
     BuiltIn.Log    TEST    WARN
 
 TC004 - TEST
-    [Tags]    TC004
+    [Tags]    TC001
     BuiltIn.Log    TEST    WARN
 
 # TC002 - LOGIN PAGE     
