@@ -47,19 +47,27 @@ pipeline {
         stage('Run Groovy Script') {
             steps {
                 script {
-                    // Access the current job from within the pipeline
-                    def job = currentBuild.rawBuild.getParent()
+                   import jenkins.model.Jenkins
+                    import hudson.model.Job
 
-                    // Delete the builds of the job
-                    job.getBuilds().each { it.delete() }
+                    MAX_BUILDS = 5
 
-                    // Reset the build number
-                    job.nextBuildNumber = 1
-                    job.save()
+                    for (job in Jenkins.instance.items) {
+                        println job.name
+
+                        def recent = job.builds.limit(MAX_BUILDS)
+
+                        for (build in job.builds) {
+                            if (!recent.contains(build)) {
+                            println "Preparing to delete: " + build
+                            // build.delete()
+                            }
+                        }
+                    }
                 }
             }
         }
-        
+
         stage('Convert Parameter') {
             steps {
                 script {
