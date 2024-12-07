@@ -99,33 +99,33 @@ pipeline {
             }
         }
     }
-    post {
-        always {
-            script {
-                def scriptOutput = bat(script: "findoutput.bat ${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH}", returnStdout: true).trim()
-                echo "Output from external script: ${scriptOutput}"
+    // post {
+    //     always {
+    //         script {
+    //             def scriptOutput = bat(script: "findoutput.bat ${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH}", returnStdout: true).trim()
+    //             echo "Output from external script: ${scriptOutput}"
 
-                def outputLength = scriptOutput.length()
-                def startIndex = outputLength - 16
-                def trimmedName = scriptOutput.substring(startIndex)
-                echo "Trimmed variable name: ${trimmedName}"
+    //             def outputLength = scriptOutput.length()
+    //             def startIndex = outputLength - 16
+    //             def trimmedName = scriptOutput.substring(startIndex)
+    //             echo "Trimmed variable name: ${trimmedName}"
 
-                def outputFileName = "output${trimmedName}.xml"
-                def reportFileName = "report${trimmedName}.html"
-                def logFileName = "log${trimmedName}.html"
+    //             def outputFileName = "output${trimmedName}.xml"
+    //             def reportFileName = "report${trimmedName}.html"
+    //             def logFileName = "log${trimmedName}.html"
 
-                // Publish Robot results with dynamic file names
-                step([
-                    $class              : 'RobotPublisher',
-                    outputPath          : "${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH}",
-                    outputFileName      : outputFileName,
-                    reportFileName      : reportFileName,
-                    logFileName         : logFileName,
-                    disableArchiveOutput: true,
-                    otherFiles          : "*.png,*.jpg"
-                ])
-            }
-        }
-    }
+    //             // Publish Robot results with dynamic file names
+    //             step([
+    //                 $class              : 'RobotPublisher',
+    //                 outputPath          : "${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH}",
+    //                 outputFileName      : outputFileName,
+    //                 reportFileName      : reportFileName,
+    //                 logFileName         : logFileName,
+    //                 disableArchiveOutput: true,
+    //                 otherFiles          : "*.png,*.jpg"
+    //             ])
+    //         }
+    //     }
+    // }
 }
 
