@@ -16,71 +16,47 @@ pipeline {
         stage('Run Groovy Script') {
             steps {
                 script {
-                    // // Load and execute the Groovy script
-                    // def groovyScript = ''' 
-                    // if (System.getProperty("os.name").toLowerCase().contains("win")) {
-                    //     println "Running on Windows"
-                    //     println "systeminfo".execute().text
-                    // } else {
-                    //     println "Running on Unix-like OS"
-                    //     println "uname -a".execute().text
-                    // }
-                    // '''
-                    
-                    // // Execute the script
-                    // bat "echo '''${groovyScript}''' > C:\\Program Files\\Jenkins\\groovy_scripts\\runSystemInfo.groovy"
-                    // bat "groovy C:\\Program Files\\Jenkins\\groovy_scripts\\runSystemInfo.groovy"
-
-                    String groovy_script = '''
-                    // Check the operating system
-                    if (System.getProperty("os.name").toLowerCase().contains("win")) {
-                        println "Running on Windows"
-                        // Run Windows-specific command
-                        println "systeminfo".execute().text
-                    } else {
-                        println "Running on Unix-like OS"
-                        // Run Unix-like system command (e.g., 'uname -a' for Linux/macOS)
-                        println "uname -a".execute().text
-                    }
-                    '''.trim()
-
-                    // Reference the built-in (master) node
-                    def masterNode = Jenkins.instance // Built-in node is the Jenkins instance itself
-                    def result = RemotingDiagnostics.executeGroovy(groovy_script, masterNode.channel)
-
-                    println result
+                    // Define your Groovy script
+                    def jobName = "Automate"
+                    def job = Jenkins.instance.getItem(jobName)
+                    job.getBuilds().each { it.delete() }
+                    job.nextBuildNumber = 1
+                    job.save()
                 }
             }
         }
-
+        
         stage('Check Python version') {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    bat label: '', script: '''
+                    bat label: 'Check Python version', script: '''
                         python --version
                        
                     '''
                 }
             }
         }
-        // stage('Check pip list version') {
-        //     steps {
-        //         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-        //             bat label: '', script: '''
-        //                 pip list
-        //             '''
-        //         }
-        //     }
-        // }
+
+         stage('Check pip list version') {
+            steps {
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    bat label: 'Check pip version', script: '''
+                        pip list
+                    '''
+                }
+            }
+        }
+        
         // stage('Check pip install requirements') {
         //     steps {
         //         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-        //             bat label: '', script: '''
+        //             bat label: 'Install Requirements', script: '''
         //                 pip install -r requirements.txt
         //             '''
         //         }
         //     }
         // }
+
         stage('Convert Parameter') {
             steps {
                 script {
