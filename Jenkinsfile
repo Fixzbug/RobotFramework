@@ -8,6 +8,30 @@ pipeline {
         INITIAL_BATFILE_PATH = 'C:/ProgramData/Jenkins/.jenkins/workspace/Automate/'
         INITIAL_RESULT_PATH = 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Result\\Automate\\'
     }
+
+    stages {
+        stage('Run Groovy Script') {
+            steps {
+                script {
+                    // Load and execute the Groovy script
+                    def groovyScript = ''' 
+                    if (System.getProperty("os.name").toLowerCase().contains("win")) {
+                        println "Running on Windows"
+                        println "systeminfo".execute().text
+                    } else {
+                        println "Running on Unix-like OS"
+                        println "uname -a".execute().text
+                    }
+                    '''
+                    
+                    // Execute the script
+                    bat "echo '''${groovyScript}''' > C:\\Program Files\\Jenkins\\groovy_scripts\\runSystemInfo.groovy"
+                    bat "groovy C:\\Program Files\\Jenkins\\groovy_scripts\\runSystemInfo.groovy"
+                }
+            }
+        }
+    }
+
     stages {
         stage('Check Python version') {
             steps {
