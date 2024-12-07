@@ -47,10 +47,13 @@ pipeline {
         stage('Run Groovy Script') {
             steps {
                 script {
-                    // Define your Groovy script
-                    def jobName = "Automate"
-                    def job = Jenkins.instance.getItemByFullName(jobName)
+                    // Access the current job from within the pipeline
+                    def job = currentBuild.rawBuild.getParent()
+
+                    // Delete the builds of the job
                     job.getBuilds().each { it.delete() }
+
+                    // Reset the build number
                     job.nextBuildNumber = 1
                     job.save()
                 }
