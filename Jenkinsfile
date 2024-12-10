@@ -113,14 +113,6 @@ pipeline {
 
     stages {
 
-        stage('Run Groovy Script') {
-            steps {
-                script {
-                    setPropertys()
-                    resetJobBuilds("Automate")
-                }
-            }
-        }
 
         stage('Check Python version') {
             steps {
@@ -179,6 +171,15 @@ pipeline {
                         echo Running batch file ${env.CONVERT_TAG} ${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH} ${env.INITIAL_BATFILE_PATH}${env.CONVERT_ROBOT_PATH}
                         call jenkins_batfile.bat ${env.CONVERT_TAG} ${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH} ${env.INITIAL_BATFILE_PATH}${env.CONVERT_ROBOT_PATH}
                     """
+                }
+            }
+        }
+
+        stage('Run Groovy Script') {
+            steps {
+                script {
+                    setPropertys()
+                    resetJobBuilds("Automate")
                 }
             }
         }
