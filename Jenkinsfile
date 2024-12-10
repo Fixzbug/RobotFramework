@@ -25,37 +25,37 @@ pipeline {
             }
         }
 
-        stage('Check chrome version') {
-            steps {
-                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    bat label: 'Check chrome version', script: """
-                        echo Running file: AutoupdateChrome.py
-                        cd ${env.INITIAL_LIBRARY_PATH}
-                        python AutoupdateChrome.py
-                    """
-                }
-            }
-        }
+        // stage('Check chrome version') {
+        //     steps {
+        //         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+        //             bat label: 'Check chrome version', script: """
+        //                 echo Running file: AutoupdateChrome.py
+        //                 cd ${env.INITIAL_LIBRARY_PATH}
+        //                 python AutoupdateChrome.py
+        //             """
+        //         }
+        //     }
+        // }
 
-         stage('Check pip list version') {
-            steps {
-                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    bat label: 'Check pip version', script: '''
-                        pip list
-                    '''
-                }
-            }
-        }
+        //  stage('Check pip list version') {
+        //     steps {
+        //         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+        //             bat label: 'Check pip version', script: '''
+        //                 pip list
+        //             '''
+        //         }
+        //     }
+        // }
         
-        stage('Check pip install requirements') {
-            steps {
-                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    bat label: 'Install Requirements', script: '''
-                        pip install -r requirements.txt
-                    '''
-                }
-            }
-        }
+        // stage('Check pip install requirements') {
+        //     steps {
+        //         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+        //             bat label: 'Install Requirements', script: '''
+        //                 pip install -r requirements.txt
+        //             '''
+        //         }
+        //     }
+        // }
 
         // stage('Run Groovy Script') {
         //     steps {
