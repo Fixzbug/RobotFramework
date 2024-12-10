@@ -25,7 +25,7 @@ def resetJobBuilds(String jobName) {
               // รีเซ็ตหมายเลขบิลด์ถัดไปเป็น 1
             println "Resetting the next build number for job: ${jobName}"
             try {
-                job.nextBuildNumber = 1
+                job.nextBuildNumber = build.number
                 job.save()
                 println "Successfully reset the next build number for job: ${jobName}"
             } catch (Exception e) {
