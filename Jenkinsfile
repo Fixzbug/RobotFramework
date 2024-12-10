@@ -19,19 +19,18 @@ def resetJobBuilds(String jobName) {
             } catch (Exception e) {
                 println "Error deleting build #${build.number}: ${e.message}"
             }
+            // รีเซ็ตหมายเลขบิลด์ถัดไปเป็น 1
+            println "Resetting the next build number for job: ${jobName}"
+            try {
+                job.nextBuildNumber = 1
+                job.save()
+                println "Successfully reset the next build number for job: ${jobName}"
+            } catch (Exception e) {
+                println "Error resetting build number: ${e.message}"
+            }
         } else {
             println "Skipping build #${build.number} (Currently running)"
         }
-    }
-
-    // รีเซ็ตหมายเลขบิลด์ถัดไปเป็น 1
-    println "Resetting the next build number for job: ${jobName}"
-    try {
-        job.nextBuildNumber = 1
-        job.save()
-        println "Successfully reset the next build number for job: ${jobName}"
-    } catch (Exception e) {
-        println "Error resetting build number: ${e.message}"
     }
 }
 
@@ -118,6 +117,15 @@ pipeline {
 
     stages {
 
+        stage('Run Groovy Script') {
+            steps {
+                script {
+                    setPropertys()
+                    resetJobBuilds("Automate")
+                }
+            }
+        }
+
         stage('Check Python version') {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
@@ -175,15 +183,6 @@ pipeline {
                         echo Running batch file ${env.CONVERT_TAG} ${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH} ${env.INITIAL_BATFILE_PATH}${env.CONVERT_ROBOT_PATH}
                         call jenkins_batfile.bat ${env.CONVERT_TAG} ${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH} ${env.INITIAL_BATFILE_PATH}${env.CONVERT_ROBOT_PATH}
                     """
-                }
-            }
-        }
-
-        stage('Run Groovy Script') {
-            steps {
-                script {
-                    setPropertys()
-                    // resetJobBuilds("Automate")
                 }
             }
         }
