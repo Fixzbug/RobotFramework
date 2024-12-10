@@ -4,37 +4,43 @@ def resetJobBuilds(String jobName) {
 
     // ชื่อของ Job ที่ต้องการลบ
     // ดึงข้อมูล Job
+    // def job = Jenkins.instance.getItem(jobName)
+
+    // if (job == null) {
+    //     println "Job '${jobName}' not found!"
+    //     return
+    // }
+
+    // // ลบเฉพาะบิลด์ที่เสร็จสิ้นแล้ว
+    // println "Deleting completed builds for job: ${jobName}"
+    // job.getBuilds().each { build ->
+    //     if (!build.isBuilding()) { // ตรวจสอบว่าไม่ได้กำลังรันอยู่
+    //         try {
+    //             println "Deleting build #${build.number} (Status: ${build.result})"
+    //             build.delete()
+    //         } catch (Exception e) {
+    //             println "Error deleting build #${build.number}: ${e.message}"
+    //         }
+    //     } else {
+    //         println "Skipping build #${build.number} (Currently running)"
+    //     }
+    // }
+
+    // // รีเซ็ตหมายเลขบิลด์ถัดไปเป็น 1
+    // println "Resetting the next build number for job: ${jobName}"
+    // try {
+    //     job.nextBuildNumber = 1
+    //     job.save()
+    //     println "Successfully reset the next build number for job: ${jobName}"
+    // } catch (Exception e) {
+    //     println "Error resetting build number: ${e.message}"
+    // }
+
     def job = Jenkins.instance.getItem(jobName)
-
-    if (job == null) {
-        println "Job '${jobName}' not found!"
-        return
-    }
-
-    // ลบเฉพาะบิลด์ที่เสร็จสิ้นแล้ว
-    println "Deleting completed builds for job: ${jobName}"
-    job.getBuilds().each { build ->
-        if (!build.isBuilding()) { // ตรวจสอบว่าไม่ได้กำลังรันอยู่
-            try {
-                println "Deleting build #${build.number} (Status: ${build.result})"
-                build.delete()
-            } catch (Exception e) {
-                println "Error deleting build #${build.number}: ${e.message}"
-            }
-        } else {
-            println "Skipping build #${build.number} (Currently running)"
-        }
-    }
-
-    // รีเซ็ตหมายเลขบิลด์ถัดไปเป็น 1
-    println "Resetting the next build number for job: ${jobName}"
-    try {
-        job.nextBuildNumber = 1
-        job.save()
-        println "Successfully reset the next build number for job: ${jobName}"
-    } catch (Exception e) {
-        println "Error resetting build number: ${e.message}"
-    }
+    job.getBuilds().each { it.delete() }
+    job.nextBuildNumber = 1
+    job.save()
+    println "Successfully reset the next build number for job: ${jobName}"
 }
 
 pipeline {
@@ -53,14 +59,7 @@ pipeline {
 
     stages {
 
-        stage('Run Groovy Script') {
-            steps {
-                script {
-                    // Place your Groovy script here
-                    resetJobBuilds("Automate")
-                }
-            }
-        }
+       
 
         stage('Check Python version') {
             steps {
@@ -150,6 +149,15 @@ pipeline {
                         echo Running batch file ${env.CONVERT_TAG} ${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH} ${env.INITIAL_BATFILE_PATH}${env.CONVERT_ROBOT_PATH}
                         call jenkins_batfile.bat ${env.CONVERT_TAG} ${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH} ${env.INITIAL_BATFILE_PATH}${env.CONVERT_ROBOT_PATH}
                     """
+                }
+            }
+        }
+
+        stage('Run Groovy Script') {
+            steps {
+                script {
+                    // Place your Groovy script here
+                    resetJobBuilds("Automate")
                 }
             }
         }
