@@ -64,8 +64,6 @@ pipeline {
             steps {
                 script {
                     // Place your Groovy script here
-                    def jobNames = Jenkins.instance.getAllItems(Job.class).collect { it.name }
-                    echo "Job Names: ${jobNames}"
                     resetJobBuilds("Automate")
                 }
             }
