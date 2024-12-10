@@ -155,8 +155,8 @@ pipeline {
             steps {
                 script {
                     // Place your Groovy script here
-                    // resetJobBuilds("Automate")
                     setPropertys()
+                    resetJobBuilds("Automate")
                 }
             }
         }
