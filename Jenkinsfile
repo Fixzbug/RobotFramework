@@ -1,5 +1,4 @@
-import jenkins.model.Jenkins
-
+// import jenkins.model.Jenkins
 @NonCPS
 def resetJobBuilds(String jobName) {
 
