@@ -1,7 +1,6 @@
 // import jenkins.model.Jenkins
 @NonCPS
 def resetJobBuilds(String jobName) {
-
     // ดึงข้อมูล Job
     def job = Jenkins.instance.getItem(jobName)
 
@@ -34,15 +33,47 @@ def resetJobBuilds(String jobName) {
     } catch (Exception e) {
         println "Error resetting build number: ${e.message}"
     }
-
 }
 
 def setPropertys() {
-    System.setProperty("hudson.model.DirectoryBrowserSupport.CSP","sandbox allow-scripts; default-src 'none'; img-src 'self' data: ; style-src 'self' 'unsafe-inline' data: ; script-src 'self' 'unsafe-inline' 'unsafe-eval' ;")
+    System.setProperty('hudson.model.DirectoryBrowserSupport.CSP', "sandbox allow-scripts; default-src 'none'; img-src 'self' data: ; style-src 'self' 'unsafe-inline' data: ; script-src 'self' 'unsafe-inline' 'unsafe-eval' ;")
+}
+
+def convertpath(String files) {
+    // Load the data file
+    def dataFile = load files
+
+    // Use the parameter as the key
+    def keyToRetrieve = params.BATFILE_NAME
+
+    // Retrieve the data
+    def convertData = dataFile.getData(keyToRetrieve)
+
+    // Check if the data was found
+    if (convertData == null) {
+        // Handle missing key
+        echo "Warning: No data found for key '${keyToRetrieve}'"
+        // Optionally set default values here or decide how to handle this case
+        env.CONVERT_TAG = 'DEFAULT_TAG'
+        env.CONVERT_RESULT_PATH = 'DEFAULT_RESULT_PATH'
+        env.CONVERT_ROBOT_PATH = 'DEFAULT_ROBOT_PATH'
+                    } else {
+        // Check if the data is valid
+        if (convertData instanceof String) {
+            error "Data retrieval failed: ${convertData}"
+        }
+        // Set environment variables
+        env.CONVERT_TAG = convertData.tag
+        env.CONVERT_RESULT_PATH = convertData.resultpath
+        env.CONVERT_ROBOT_PATH = convertData.robotpath
+        // Output the results
+        echo "Converted result path: ${env.CONVERT_TAG}"
+        echo "Converted result path: ${env.CONVERT_RESULT_PATH}"
+        echo "Converted result path: ${env.CONVERT_ROBOT_PATH}"
+    }
 }
 
 pipeline {
-
     agent {
         node {
             label 'built-in'
@@ -57,14 +88,12 @@ pipeline {
 
     stages {
 
-       
-
         stage('Check Python version') {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     bat label: 'Check Python version', script: '''
                         python --version
-                       
+
                     '''
                 }
             }
@@ -91,7 +120,7 @@ pipeline {
         //         }
         //     }
         // }
-        
+
         // stage('Check pip install requirements') {
         //     steps {
         //         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
@@ -102,41 +131,10 @@ pipeline {
         //     }
         // }
 
-
         stage('Convert Parameter') {
             steps {
                 script {
-                    // Load the data file
-                    def dataFile = load 'jenkinsdata'
-
-                    // Use the parameter as the key
-                    def keyToRetrieve = params.BATFILE_NAME
-
-                    // Retrieve the data
-                    def convertData = dataFile.getData(keyToRetrieve)
-
-                    // Check if the data was found
-                    if (convertData == null) {
-                        // Handle missing key
-                        echo "Warning: No data found for key '${keyToRetrieve}'"
-                        // Optionally set default values here or decide how to handle this case
-                        env.CONVERT_TAG = 'DEFAULT_TAG'
-                        env.CONVERT_RESULT_PATH = 'DEFAULT_RESULT_PATH'
-                        env.CONVERT_ROBOT_PATH = 'DEFAULT_ROBOT_PATH'
-                    } else {
-                        // Check if the data is valid
-                        if (convertData instanceof String) {
-                            error "Data retrieval failed: ${convertData}"
-                        }
-                        // Set environment variables
-                        env.CONVERT_TAG = convertData.tag
-                        env.CONVERT_RESULT_PATH = convertData.resultpath
-                        env.CONVERT_ROBOT_PATH = convertData.robotpath
-                        // Output the results
-                        echo "Converted result path: ${env.CONVERT_TAG}"
-                        echo "Converted result path: ${env.CONVERT_RESULT_PATH}"
-                        echo "Converted result path: ${env.CONVERT_ROBOT_PATH}"
-                    }
+                   convertpath('jenkinsdata')
                 }
             }
         }
@@ -156,11 +154,10 @@ pipeline {
                 script {
                     // Place your Groovy script here
                     setPropertys()
-                    // resetJobBuilds("Automate")
+                // resetJobBuilds("Automate")
                 }
             }
         }
-
     }
     post {
         always {
@@ -185,10 +182,9 @@ pipeline {
                     reportFileName      : reportFileName,
                     logFileName         : logFileName,
                     disableArchiveOutput: true,
-                    otherFiles          : "*.png,*.jpg"
+                    otherFiles          : '*.png,*.jpg'
                 ])
             }
         }
     }
 }
-
