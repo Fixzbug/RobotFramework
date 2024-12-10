@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.1.1 (Python 3.11.2 on win32)" generated="2024-12-10T23:54:13.303012" rpa="false" schemaversion="5">
+<suite id="s1" name="RobotFramework" source="D:\Automate\RobotFramework">
+<suite id="s1-s1" name="Testcase" source="D:\Automate\RobotFramework\Testcase">
+<suite id="s1-s1-s1" name="QR" source="D:\Automate\RobotFramework\Testcase\QR">
+<suite id="s1-s1-s1-s1" name="API" source="D:\Automate\RobotFramework\Testcase\QR\API.robot">
+<test id="s1-s1-s1-s1-t1" name="API PAYMENT" line="18">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2024-12-10T23:54:13.657120" level="INFO">Opening browser 'chrome' to base url 'https://washmevmm.com/fridayqr-sdk-apiv2/api/pay.php'.</msg>
+<arg>url=${URL_API1}</arg>
+<arg>browser=${Browser_chrome}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2024-12-10T23:54:13.656122" elapsed="2.345702"/>
+</kw>
+<kw name="POST" owner="RequestsLibrary">
+<msg time="2024-12-10T23:54:17.222131" level="INFO">POST Request : url=https://washmevmm.com/fridayqr-sdk-apiv2/api/pay.php 
+ path_url=/fridayqr-sdk-apiv2/api/pay.php 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '61'} 
+ body={"type": "native_pay", "device_id": "QR0001", "total_fee": 1} 
+ </msg>
+<msg time="2024-12-10T23:54:17.223129" level="INFO">POST Response : url=https://washmevmm.com/fridayqr-sdk-apiv2/api/pay.php 
+ status=200, reason=OK 
+ headers={'Connection': 'Keep-Alive', 'Keep-Alive': 'timeout=5, max=100', 'x-powered-by': 'PHP/7.4.33', 'access-control-allow-origin': '*', 'content-type': 'application/json; charset=UTF-8', 'access-control-allow-methods': 'POST', 'access-control-max-age': '3600', 'access-control-allow-headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With', 'content-length': '210', 'content-encoding': 'gzip', 'vary': 'Accept-Encoding', 'date': 'Tue, 10 Dec 2024 16:54:17 GMT', 'server': 'LiteSpeed', 'platform': 'hostinger', 'panel': 'hpanel', 'alt-svc': 'h3=":443"; ma=2592000, h3-29=":443"; ma=2592000, h3-Q050=":443"; ma=2592000, h3-Q046=":443"; ma=2592000, h3-Q043=":443"; ma=2592000, quic=":443"; ma=2592000; v="43,46"'} 
+ body={"status":200,"device_id":"QR0001","result":"SUCCESS","ksher_order_no":"90020241211005417944745","mch_order_no":"20241210235416267636","total_fee":100,"code_url":"00020101021230750016A0000006770101120115010556019950701022020241211005417944745030890041109530376454041.005802TH63045C7C"} 
+ </msg>
+<msg time="2024-12-10T23:54:17.224125" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${URL_API1}</arg>
+<arg>data=${PAYLOAD}</arg>
+<doc>Sends a POST request.</doc>
+<status status="PASS" start="2024-12-10T23:54:16.006810" elapsed="1.217315"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2024-12-10T23:54:17.230110" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2024-12-10T23:54:17.227124" elapsed="0.003984"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2024-12-10T23:54:17.236094" level="INFO">${json_data} = {'status': 200, 'device_id': 'QR0001', 'result': 'SUCCESS', 'ksher_order_no': '90020241211005417944745', 'mch_order_no': '20241210235416267636', 'total_fee': 100, 'code_url': '00020101021230750016A000...</msg>
+<var>${json_data}</var>
+<arg>dict(${response.json()})</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2024-12-10T23:54:17.233102" elapsed="0.004993"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${json_data}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2024-12-10T23:54:17.239089" elapsed="0.002994"/>
+</kw>
+<kw name="Close All Browsers" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="PASS" start="2024-12-10T23:54:17.244112" elapsed="6.287876"/>
+</kw>
+<tag>API001</tag>
+<status status="PASS" start="2024-12-10T23:54:13.655123" elapsed="9.878853"/>
+</test>
+<status status="PASS" start="2024-12-10T23:54:13.335550" elapsed="10.203414"/>
+</suite>
+<status status="PASS" start="2024-12-10T23:54:13.332554" elapsed="10.212392"/>
+</suite>
+<status status="PASS" start="2024-12-10T23:54:13.330557" elapsed="10.220379"/>
+</suite>
+<status status="PASS" start="2024-12-10T23:54:13.307214" elapsed="10.250702"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0" skip="0">API001</stat>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="RobotFramework">RobotFramework</stat>
+<stat pass="1" fail="0" skip="0" id="s1-s1" name="Testcase">RobotFramework.Testcase</stat>
+<stat pass="1" fail="0" skip="0" id="s1-s1-s1" name="QR">RobotFramework.Testcase.QR</stat>
+<stat pass="1" fail="0" skip="0" id="s1-s1-s1-s1" name="API">RobotFramework.Testcase.QR.API</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

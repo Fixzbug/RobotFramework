@@ -19,7 +19,13 @@ def getData(String key) {
             'tag':'TC004',
             'resultpath':'TC_login',
             'robotpath':'Testcase/SIT/TC_login.robot'
+        ],
+        'API_QRV2':[
+            'tag':'API001',
+            'resultpath':'APIQR',
+            'robotpath':'Testcase/QR/API.robot'
         ]
+        
     ]
     return dataMap[key] ?: 'Key not found'
 }
