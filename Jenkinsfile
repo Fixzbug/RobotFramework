@@ -36,7 +36,11 @@ def resetJobBuilds(String jobName) {
 }
 
 def setPropertys() {
-    System.setProperty('hudson.model.DirectoryBrowserSupport.CSP', "sandbox allow-scripts; default-src 'none'; img-src 'self' data: ; style-src 'self' 'unsafe-inline' data: ; script-src 'self' 'unsafe-inline' 'unsafe-eval' ;")
+    System.setProperty('hudson.model.DirectoryBrowserSupport.CSP', 
+    "sandbox allow-scripts; default-src 'none'; 
+    img-src 'self' data: ;
+    style-src 'self' 'unsafe-inline' data: ; 
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' ;")
 }
 
 def convertpath(String files) {
@@ -57,7 +61,7 @@ def convertpath(String files) {
         env.CONVERT_TAG = 'DEFAULT_TAG'
         env.CONVERT_RESULT_PATH = 'DEFAULT_RESULT_PATH'
         env.CONVERT_ROBOT_PATH = 'DEFAULT_ROBOT_PATH'
-                    } else {
+    } else {
         // Check if the data is valid
         if (convertData instanceof String) {
             error "Data retrieval failed: ${convertData}"
@@ -71,6 +75,32 @@ def convertpath(String files) {
         echo "Converted result path: ${env.CONVERT_RESULT_PATH}"
         echo "Converted result path: ${env.CONVERT_ROBOT_PATH}"
     }
+}
+
+def logoutput(){
+
+    def scriptOutput = bat(script: "findoutput.bat ${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH}", returnStdout: true).trim()
+    echo "Output from external script: ${scriptOutput}"
+
+    def outputLength = scriptOutput.length()
+    def startIndex = outputLength - 16
+    def trimmedName = scriptOutput.substring(startIndex)
+    echo "Trimmed variable name: ${trimmedName}"
+
+    def outputFileName = "output${trimmedName}.xml"
+    def reportFileName = "report${trimmedName}.html"
+    def logFileName = "log${trimmedName}.html"
+
+    // Publish Robot results with dynamic file names
+    step([
+        $class              : 'RobotPublisher',
+        outputPath          : "${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH}",
+        outputFileName      : outputFileName,
+        reportFileName      : reportFileName,
+        logFileName         : logFileName,
+        disableArchiveOutput: true,
+        otherFiles          : '*.png,*.jpg'
+    ])
 }
 
 pipeline {
@@ -152,9 +182,8 @@ pipeline {
         stage('Run Groovy Script') {
             steps {
                 script {
-                    // Place your Groovy script here
                     setPropertys()
-                // resetJobBuilds("Automate")
+                    // resetJobBuilds("Automate")
                 }
             }
         }
@@ -162,28 +191,7 @@ pipeline {
     post {
         always {
             script {
-                def scriptOutput = bat(script: "findoutput.bat ${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH}", returnStdout: true).trim()
-                echo "Output from external script: ${scriptOutput}"
-
-                def outputLength = scriptOutput.length()
-                def startIndex = outputLength - 16
-                def trimmedName = scriptOutput.substring(startIndex)
-                echo "Trimmed variable name: ${trimmedName}"
-
-                def outputFileName = "output${trimmedName}.xml"
-                def reportFileName = "report${trimmedName}.html"
-                def logFileName = "log${trimmedName}.html"
-
-                // Publish Robot results with dynamic file names
-                step([
-                    $class              : 'RobotPublisher',
-                    outputPath          : "${env.INITIAL_RESULT_PATH}${env.CONVERT_RESULT_PATH}",
-                    outputFileName      : outputFileName,
-                    reportFileName      : reportFileName,
-                    logFileName         : logFileName,
-                    disableArchiveOutput: true,
-                    otherFiles          : '*.png,*.jpg'
-                ])
+               logoutput()
             }
         }
     }
