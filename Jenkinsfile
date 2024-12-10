@@ -1,36 +1,41 @@
+import jenkins.model.Jenkins
+
 @NonCPS
 def resetJobBuilds(String jobName) {
 
-    def jobNames = Jenkins.instance.getAllItems(Job.class).collect { it.name }
-    echo "Job Names: ${jobNames}"
+    // ชื่อของ Job ที่ต้องการลบ
+    // ดึงข้อมูล Job
+    def job = Jenkins.instance.getItem(jobName)
 
-    if (jobNames == null) {
+    if (job == null) {
         println "Job '${jobName}' not found!"
         return
     }
 
-    def job = Jenkins.instance.getItem(jobName)
-    job.getBuilds().each { it.delete() }
-    job.nextBuildNumber = 1
-    job.save()
-    println "Successfully reset the next build number for job: ${jobName}"
+    // ลบเฉพาะบิลด์ที่เสร็จสิ้นแล้ว
+    println "Deleting completed builds for job: ${jobName}"
+    job.getBuilds().each { build ->
+        if (!build.isBuilding()) { // ตรวจสอบว่าไม่ได้กำลังรันอยู่
+            try {
+                println "Deleting build #${build.number} (Status: ${build.result})"
+                build.delete()
+            } catch (Exception e) {
+                println "Error deleting build #${build.number}: ${e.message}"
+            }
+        } else {
+            println "Skipping build #${build.number} (Currently running)"
+        }
+    }
 
-    // job.getBuilds().each { build ->
-    //     try {
-    //         println "Deleting build #${build.number}"
-    //         build.delete()
-    //     } catch (Exception e) {
-    //         println "Error deleting build #${build.number}: ${e.message}"
-    //     }
-    // }
-
-    // try {
-    //     job.nextBuildNumber = 1
-    //     job.save()
-    //     println "Successfully reset the next build number for job: ${jobName}"
-    // } catch (Exception e) {
-    //     println "Error resetting build number: ${e.message}"
-    // }
+    // รีเซ็ตหมายเลขบิลด์ถัดไปเป็น 1
+    println "Resetting the next build number for job: ${jobName}"
+    try {
+        job.nextBuildNumber = 1
+        job.save()
+        println "Successfully reset the next build number for job: ${jobName}"
+    } catch (Exception e) {
+        println "Error resetting build number: ${e.message}"
+    }
 }
 
 pipeline {
