@@ -21,13 +21,13 @@ def resetJobBuilds(String jobName) {
             }
           
         } else {
+            // รีเซ็ตหมายเลขบิลด์ถัดไปเป็น 1
             println "Skipping build #${build.number} (Currently running)"
-              // รีเซ็ตหมายเลขบิลด์ถัดไปเป็น 1
             println "Resetting the next build number for job: ${jobName}"
             try {
                 job.nextBuildNumber = build.number
                 job.save()
-                println "Successfully reset the next build number for job: ${jobName}"
+                println "Successfully reset the next build number for job: ${jobName} build number: ${build.number}"
             } catch (Exception e) {
                 println "Error resetting build number: ${e.message}"
             }
@@ -180,7 +180,7 @@ pipeline {
             steps {
                 script {
                     setPropertys()
-                    resetJobBuilds("Automate")
+                    // resetJobBuilds("Automate")
                 }
             }
         }
