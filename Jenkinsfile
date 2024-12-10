@@ -9,7 +9,7 @@ def resetJobBuilds(String jobName) {
         return
     }
 
-    def job = Jenkins.instance.getItem(jobNames)
+    def job = Jenkins.instance.getItem(jobName)
     job.getBuilds().each { it.delete() }
     job.nextBuildNumber = 1
     job.save()
