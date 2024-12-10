@@ -1,27 +1,36 @@
 @NonCPS
 def resetJobBuilds(String jobName) {
-    def job = Jenkins.instance.getItem(jobName)
-    if (job == null) {
+
+    def jobNames = Jenkins.instance.getAllItems(Job.class).collect { it.name }
+    echo "Job Names: ${jobNames}"
+
+    if (jobNames == null) {
         println "Job '${jobName}' not found!"
         return
     }
 
-    job.getBuilds().each { build ->
-        try {
-            println "Deleting build #${build.number}"
-            build.delete()
-        } catch (Exception e) {
-            println "Error deleting build #${build.number}: ${e.message}"
-        }
-    }
+    def job = Jenkins.instance.getItem(jobNames)
+    job.getBuilds().each { it.delete() }
+    job.nextBuildNumber = 1
+    job.save()
+    println "Successfully reset the next build number for job: ${jobName}"
 
-    try {
-        job.nextBuildNumber = 1
-        job.save()
-        println "Successfully reset the next build number for job: ${jobName}"
-    } catch (Exception e) {
-        println "Error resetting build number: ${e.message}"
-    }
+    // job.getBuilds().each { build ->
+    //     try {
+    //         println "Deleting build #${build.number}"
+    //         build.delete()
+    //     } catch (Exception e) {
+    //         println "Error deleting build #${build.number}: ${e.message}"
+    //     }
+    // }
+
+    // try {
+    //     job.nextBuildNumber = 1
+    //     job.save()
+    //     println "Successfully reset the next build number for job: ${jobName}"
+    // } catch (Exception e) {
+    //     println "Error resetting build number: ${e.message}"
+    // }
 }
 
 pipeline {
