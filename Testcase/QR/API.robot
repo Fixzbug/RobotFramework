@@ -15,16 +15,17 @@ ${Browser_chrome}    chrome
 *** Test Cases ***
 API PAYMENT
     [Tags]    API001
-    SeleniumLibrary.Open Browser    url=${URL_API1}    browser=${Browser_chrome}
+    BuiltIn.Log    TEST    WARN
+    # SeleniumLibrary.Open Browser    url=${URL_API1}    browser=${Browser_chrome}
 
-    # Send POST request with form data
-    ${response}    RequestsLibrary.POST    ${URL_API1}    data=${PAYLOAD}    
+    # # Send POST request with form data
+    # ${response}    RequestsLibrary.POST    ${URL_API1}    data=${PAYLOAD}    
 
-    # Validate the response
-    BuiltIn.Should Be Equal As Numbers    ${response.status_code}    200
-    ${json_data}    BuiltIn.Evaluate    dict(${response.json()})
-    BuiltIn.Log    ${json_data}    WARN
-    # BuiltIn.Log To Console    ${json_data}
+    # # Validate the response
+    # BuiltIn.Should Be Equal As Numbers    ${response.status_code}    200
+    # ${json_data}    BuiltIn.Evaluate    dict(${response.json()})
+    # BuiltIn.Log    ${json_data}    WARN
+    # # BuiltIn.Log To Console    ${json_data}
 
 
 

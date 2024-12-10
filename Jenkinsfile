@@ -16,18 +16,20 @@ def resetJobBuilds(String jobName) {
             try {
                 println "Deleting build #${build.number} (Status: ${build.result})"
                 build.delete()
+                job.nextBuildNumber = 1
+                job.save()
             } catch (Exception e) {
                 println "Error deleting build #${build.number}: ${e.message}"
             }
-            // รีเซ็ตหมายเลขบิลด์ถัดไปเป็น 1
-            println "Resetting the next build number for job: ${jobName}"
-            try {
-                job.nextBuildNumber = 1
-                job.save()
-                println "Successfully reset the next build number for job: ${jobName}"
-            } catch (Exception e) {
-                println "Error resetting build number: ${e.message}"
-            }
+            // // รีเซ็ตหมายเลขบิลด์ถัดไปเป็น 1
+            // println "Resetting the next build number for job: ${jobName}"
+            // try {
+            //     job.nextBuildNumber = 1
+            //     job.save()
+            //     println "Successfully reset the next build number for job: ${jobName}"
+            // } catch (Exception e) {
+            //     println "Error resetting build number: ${e.message}"
+            // }
         } else {
             println "Skipping build #${build.number} (Currently running)"
         }
