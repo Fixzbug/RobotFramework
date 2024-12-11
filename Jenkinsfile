@@ -165,6 +165,7 @@ pipeline {
                 }
             }
         }
+
         stage('RUN E2E') {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
@@ -185,6 +186,7 @@ pipeline {
             }
         }
     }
+    
     post {
         always {
             script {
