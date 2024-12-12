@@ -1,5 +1,4 @@
-// import jenkins.model.Jenkins
-@NonCPS
+// @NonCPS
 def resetJobBuilds(String jobName) {
     // ดึงข้อมูล Job
     def job = Jenkins.instance.getItem(jobName)
@@ -104,6 +103,10 @@ pipeline {
         node {
             label 'built-in'
         }
+    }
+
+    options {
+        ansiColor('xterm')
     }
 
     environment {
